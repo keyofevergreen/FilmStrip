@@ -1,2 +1,2 @@
-# ducky-shop
+# FilmStrip
 Buying ducks for every taste (not literally) and color
