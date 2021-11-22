@@ -1,6 +1,6 @@
 <template>
   <swiper
-      :slidesPerView="9"
+      :slidesPerView="3"
       :slidesPerGroup="1"
       :loop="true"
       :loopFillGroupWithBlank="true"
@@ -8,19 +8,34 @@
         "delay": 5000,
         "disableOnInteraction": false
       }'
+      :breakpoints='{
+        "640": {
+        "slidesPerView": 3,
+        "spaceBetween": 20
+        },
+        "768": {
+          "slidesPerView": 5,
+          "spaceBetween": 40
+        },
+        "1024": {
+          "slidesPerView": 6,
+          "spaceBetween": 0
+      }
+     }'
       class="mySwiper"
   >
-    <swiper-slide v-for='premier in premiers.items' :premier='premier' :key="premier.kinopoiskId" class="filmstrip">
-      <div class="filmstrip__perforation top">
-        <div></div>
-        <div></div>
-      </div>
-      <img :src='premier.posterUrl' :alt='premier.nameRu' class='filmstrip__poster'>
-      <div class="filmstrip__perforation down">
-        <div></div>
-        <div></div>
-      </div>
-    </swiper-slide>
+    <swiper-slide v-for=' premier in premiers.items
+  ' :premier='premier' :key="premier.kinopoiskId" class="filmstrip">
+  <div class="filmstrip__perforation top">
+    <div></div>
+    <div></div>
+  </div>
+  <img :src='premier.posterUrl' :alt='premier.nameRu' class='filmstrip__poster'>
+  <div class="filmstrip__perforation down">
+    <div></div>
+    <div></div>
+  </div>
+  </swiper-slide>
   </swiper>
 </template>
 
@@ -56,7 +71,7 @@ export default {
 <style scoped>
 .swiper {
   margin-top: 20px;
-  padding: 10px 0;
+  padding: 10px;
   width: 100%;
   height: 100%;
   background: black;
@@ -86,7 +101,7 @@ export default {
 }
 
 .top {
- grid-area: top-perforation;
+  grid-area: top-perforation;
   margin-bottom: 10px;
 }
 
@@ -97,8 +112,8 @@ export default {
 
 .filmstrip__poster {
   grid-area: poster;
-  height: 280px;
-  width: 215px;
+  height: 255px;
+  width: 180px;
 }
 
 .filmstrip__perforation {
