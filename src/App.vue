@@ -1,30 +1,17 @@
 <template>
-  <div class="cinema-header">
-    <div class="wrap">
-      <div class="logo-line">
-        <h1 class="logo-line__header">FilmStrip</h1>
-        <h3 class="logo-line__description">Catch the moments</h3>
-      </div>
-      <nav>
-        <ul class="menu">
-          <li>Онлайн-кинотеатр</li>
-          <li>Фильмы</li>
-          <li>Аренда кинозалов</li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  <div class="wrap content">
+  <Header/>
+  <main class="wrap content">
     <FilmSwiper :premiers="premiers"/>
-  </div>
+  </main>
 </template>
 <script>
 import moment from "moment";
 import FilmSwiper from "./components/FilmSwiper";
+import Header from "./components/Header";
 
 export default {
   name: "App",
-  components: { FilmSwiper },
+  components: { FilmSwiper, Header },
   data() {
     return {
       premiers: []
@@ -50,7 +37,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Estonia&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&display=swap');
 
 * {
   margin: 0;
@@ -59,60 +46,17 @@ export default {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .wrap {
   width: 100%;
+  min-width: 365px;
   max-width: 1140px;
   margin: 0 auto;
-  padding: 15px;
-}
-
-.cinema-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%);
-}
-
-.menu {
-  min-width: 700px;
-  height: 34px;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-}
-
-.menu li {
-  flex: 1 1 0px;
-  text-align: center;
-}
-
-.logo-line {
-  width: 100%;
-}
-
-.logo-line__header {
-  position: relative;
-  font-size: 35px;
-}
-
-.logo-line__description {
-  font-size: 12px;
-  letter-spacing: 0.4em;
 }
 
 .content {
-  margin-top: 110px;
+  margin-top: 125px;
 }
 </style>
