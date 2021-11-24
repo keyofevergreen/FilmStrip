@@ -1,6 +1,6 @@
 <template>
   <swiper
-      :slidesPerView="3"
+      :slidesPerView="2"
       :slidesPerGroup="1"
       :loop="true"
       :loopFillGroupWithBlank="true"
@@ -9,15 +9,19 @@
         "disableOnInteraction": false
       }'
       :breakpoints='{
-        "640": {
+        "425": {
         "slidesPerView": 3,
         "spaceBetween": 20
         },
         "768": {
-          "slidesPerView": 5,
-          "spaceBetween": 40
+          "slidesPerView": 4,
+          "spaceBetween": 0
         },
-        "1024": {
+        "946": {
+          "slidesPerView": 5,
+          "spaceBetween": 0
+        },
+        "1026": {
           "slidesPerView": 6,
           "spaceBetween": 0
       }
@@ -25,17 +29,19 @@
       class="mySwiper"
   >
     <swiper-slide v-for=' premier in premiers.items
-  ' :premier='premier' :key="premier.kinopoiskId" class="filmstrip">
-  <div class="filmstrip__perforation top">
-    <div></div>
-    <div></div>
-  </div>
-  <img :src='premier.posterUrl' :alt='premier.nameRu' class='filmstrip__poster'>
-  <div class="filmstrip__perforation down">
-    <div></div>
-    <div></div>
-  </div>
-  </swiper-slide>
+  ' :premier='premier' :key="premier.kinopoiskId" class="filmstrip-item">
+      <div class="filmstrip-item__perforation top">
+        <div></div>
+        <div></div>
+      </div>
+      <div class='filmstrip-item__poster'>
+        <img :src='premier.posterUrl' :alt='premier.nameRu'>
+      </div>
+      <div class="filmstrip-item__perforation down">
+        <div></div>
+        <div></div>
+      </div>
+    </swiper-slide>
   </swiper>
 </template>
 
@@ -74,7 +80,7 @@ export default {
   padding: 10px;
   width: 100%;
   height: 100%;
-  background: black;
+  background: #000;
 }
 
 .swiper-slide {
@@ -92,7 +98,7 @@ export default {
   align-items: center;
 }
 
-.filmstrip {
+.filmstrip-item {
   display: grid;
   grid-template-areas:
   'top-perforation'
@@ -110,20 +116,72 @@ export default {
   margin-top: 10px;
 }
 
-.filmstrip__poster {
+.filmstrip-item__poster {
+  display: flex;
+  justify-content: center;
+}
+
+.filmstrip-item__poster img{
   grid-area: poster;
   height: 255px;
   width: 180px;
 }
 
-.filmstrip__perforation {
+.filmstrip-item__perforation {
   display: flex;
   justify-content: space-around;
 }
 
-.filmstrip__perforation div {
+.filmstrip-item__perforation div {
   width: 20px;
   height: 30px;
   background-color: #fff;
+}
+
+@media (max-width: 1118px) {
+  .filmstrip-item__poster img {
+    height: 235px;
+    width: 165px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .filmstrip-item__poster img {
+    height: 257px;
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .filmstrip-item__poster img {
+    height: 286px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 630px) {
+  .filmstrip-item__poster img {
+    height: 228px;
+    width: 160px;
+  }
+
+  .filmstrip-item__perforation div {
+    width: 17px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 487px) {
+  .filmstrip-item__poster img {
+    height: 200px;
+    width: 140px;
+  }
+}
+
+@media (max-width: 425px) {
+  .filmstrip-item__poster img {
+    height: 242px;
+    width: 170px;
+  }
 }
 </style>
