@@ -55,6 +55,7 @@ export default {
   z-index: 100;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%);
 }
+
 .logo-line__logo {
   height: 68px;
   width: 236px;
@@ -64,7 +65,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 700px;
   height: 57px;
   font-size: 20px;
   color: #4F5959;
@@ -73,6 +73,7 @@ export default {
 }
 
 .menu-line__nav {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,8 +81,12 @@ export default {
 }
 
 .menu-line__nav li {
-  margin-left: 32px;
-  margin-right: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 57px;
+  padding-left: 32px;
+  padding-right: 32px;
   text-align: center;
   transition: color .3s;
 }
@@ -94,5 +99,39 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 736px) {
+  .menu-line {
+    font-size: 17px;
+  }
+
+  .menu-line__nav li {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 487px) {
+  .logo-line {
+    height: 58px;
+  }
+
+  .logo-line__logo {
+    height: 58px;
+    width: 200px;
+  }
+
+  .menu-line {
+    height: 110px;
+  }
+
+  .menu-line__nav {
+    flex-direction: column;
+  }
+
+  .menu-line__nav li {
+    height: 36px;
+  }
 }
 </style>

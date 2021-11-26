@@ -57,6 +57,12 @@ body {
 }
 
 .content {
-  margin-top: 125px;
+  margin-top: 155px;
+}
+
+@media (max-width: 487px) {
+  .content {
+    margin-top: 188px;
+  }
 }
 </style>

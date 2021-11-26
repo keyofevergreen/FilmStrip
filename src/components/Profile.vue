@@ -1,5 +1,5 @@
 <template>
-  <n-button class="profile-btn" text style="font-size: 45px;">
+  <n-button class="profile-btn" text>
       <n-icon>
         <profile-icon/>
       </n-icon>
@@ -19,11 +19,15 @@ export default {
 
 <style scoped>
 .profile-btn {
+  font-size: 45px;
   margin-right: 30px;
   transition: color .3s;
 }
 
-.profile-btn:hover {
-  color: #4FC08D;
+@media (max-width: 487px) {
+  .profile-btn {
+    font-size: 35px;
+    margin-right: 20px;
+  }
 }
 </style>

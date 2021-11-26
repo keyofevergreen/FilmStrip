@@ -1,7 +1,8 @@
 <template>
   <swiper
-      :slidesPerView="2"
+      :slidesPerView="3"
       :slidesPerGroup="1"
+      :spaceBetween="0"
       :loop="true"
       :loopFillGroupWithBlank="true"
       :autoplay='{
@@ -9,21 +10,14 @@
         "disableOnInteraction": false
       }'
       :breakpoints='{
-        "425": {
-        "slidesPerView": 3,
-        "spaceBetween": 20
+        "411": {
+        "slidesPerView": 4,
         },
         "768": {
-          "slidesPerView": 4,
-          "spaceBetween": 0
-        },
-        "946": {
           "slidesPerView": 5,
-          "spaceBetween": 0
         },
         "1026": {
           "slidesPerView": 6,
-          "spaceBetween": 0
       }
      }'
       class="mySwiper"
@@ -123,8 +117,8 @@ export default {
 
 .filmstrip-item__poster img{
   grid-area: poster;
-  height: 255px;
-  width: 180px;
+  width: 100%;
+  height: 265px;
 }
 
 .filmstrip-item__perforation {
@@ -133,55 +127,48 @@ export default {
 }
 
 .filmstrip-item__perforation div {
-  width: 20px;
+  width: 12%;
   height: 30px;
   background-color: #fff;
 }
 
-@media (max-width: 1118px) {
-  .filmstrip-item__poster img {
-    height: 235px;
-    width: 165px;
+@media (max-width: 811px) {
+  .filmstrip-item__poster img{
+    height: 225px;
   }
-}
-
-@media (max-width: 1024px) {
-  .filmstrip-item__poster img {
-    height: 257px;
-    width: 180px;
-  }
-}
-
-@media (max-width: 768px) {
-  .filmstrip-item__poster img {
-    height: 286px;
-    width: 200px;
-  }
-}
-
-@media (max-width: 630px) {
-  .filmstrip-item__poster img {
-    height: 228px;
-    width: 160px;
-  }
-
   .filmstrip-item__perforation div {
-    width: 17px;
-    height: 26px;
+    height: 25px;
   }
 }
 
-@media (max-width: 487px) {
-  .filmstrip-item__poster img {
-    height: 200px;
-    width: 140px;
+@media (max-width: 648px) {
+  .filmstrip-item__poster img{
+    height: 195px;
   }
 }
 
-@media (max-width: 425px) {
-  .filmstrip-item__poster img {
-    height: 242px;
-    width: 170px;
+@media (max-width: 548px) {
+  .filmstrip-item__poster img{
+    height: 160px;
+  }
+  .filmstrip-item__perforation div {
+    height: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .swiper {
+    padding: 6px;
+  }
+  .top {
+    margin-bottom: 6px;
+  }
+
+  .down {
+    margin-top: 6px;
+  }
+  .filmstrip-item__poster img{
+    height: 150px;
   }
 }
 </style>
