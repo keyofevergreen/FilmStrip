@@ -22,14 +22,13 @@
      }'
       class="mySwiper"
   >
-    <swiper-slide v-for=' premier in premiers.items
-  ' :premier='premier' :key="premier.kinopoiskId" class="filmstrip-item">
+    <swiper-slide v-for='film in films' :film='film' :key="film.kinopoiskId" class="filmstrip-item">
       <div class="filmstrip-item__perforation top">
         <div></div>
         <div></div>
       </div>
       <div class='filmstrip-item__poster'>
-        <img :src='premier.posterUrl' :alt='premier.nameRu'>
+        <img :src='film.posterUrl' :alt='film.nameRu'>
       </div>
       <div class="filmstrip-item__perforation down">
         <div></div>
@@ -42,11 +41,10 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue";
 import "swiper/swiper-bundle.css";
-
+import { mapState } from 'vuex'
 
 import SwiperCore, { Autoplay, Navigation } from 'swiper';
 
-// install Swiper modules
 SwiperCore.use([Autoplay, Navigation]);
 
 export default {
@@ -54,15 +52,11 @@ export default {
     Swiper,
     SwiperSlide,
   },
-  props: {
-    premiers: {
-      type: Object
-    }
-  },
-  methods: {
-    stop: function (e) {
-      e.preventDefault();
-    }
+  methods: {},
+  computed: {
+    ...mapState({
+      films: state => state.films
+    }),
   },
   name: "FilmSwiper"
 }
@@ -115,7 +109,7 @@ export default {
   justify-content: center;
 }
 
-.filmstrip-item__poster img{
+.filmstrip-item__poster img {
   grid-area: poster;
   width: 100%;
   height: 265px;
@@ -133,24 +127,26 @@ export default {
 }
 
 @media (max-width: 811px) {
-  .filmstrip-item__poster img{
+  .filmstrip-item__poster img {
     height: 225px;
   }
+
   .filmstrip-item__perforation div {
     height: 25px;
   }
 }
 
 @media (max-width: 648px) {
-  .filmstrip-item__poster img{
+  .filmstrip-item__poster img {
     height: 195px;
   }
 }
 
 @media (max-width: 548px) {
-  .filmstrip-item__poster img{
+  .filmstrip-item__poster img {
     height: 160px;
   }
+
   .filmstrip-item__perforation div {
     height: 20px;
   }
@@ -160,6 +156,7 @@ export default {
   .swiper {
     padding: 6px;
   }
+
   .top {
     margin-bottom: 6px;
   }
@@ -167,7 +164,8 @@ export default {
   .down {
     margin-top: 6px;
   }
-  .filmstrip-item__poster img{
+
+  .filmstrip-item__poster img {
     height: 150px;
   }
 }
