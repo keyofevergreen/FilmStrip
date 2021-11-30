@@ -1,38 +1,16 @@
 <template>
-  <Header/>
-  <main class="wrap content">
-    <FilmSwiper :premiers="premiers"/>
-  </main>
+  <my-header></my-header>
+  <router-view>
+  </router-view>
 </template>
+
 <script>
-import moment from "moment";
-import FilmSwiper from "./components/FilmSwiper";
-import Header from "./components/Header";
+import MyHeader from "./components/MyHeader";
 
 export default {
   name: "App",
-  components: { FilmSwiper, Header },
-  data() {
-    return {
-      premiers: []
-    }
-  },
+  components: { MyHeader },
   methods: {},
-  mounted() {
-    fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres?year=${moment().format('YYYY')}&month=${moment().format('MMMM').toUpperCase()}`, {
-      method: 'GET',
-      headers: {
-        'X-API-KEY': 'bbd5c8d2-662f-428b-9b73-5fb961a663ad',
-        'Content-Type': 'application/json',
-      },
-    })
-        .then(res => res.json())
-        .then(json => {
-          console.log(json)
-          this.premiers = json;
-        })
-        .catch(err => console.log(err));
-  }
 }
 </script>
 
@@ -47,17 +25,24 @@ export default {
 
 body {
   font-family: 'Inter', sans-serif;
+  min-width: 365px;
 }
 
 .wrap {
   width: 100%;
-  min-width: 365px;
   max-width: 1140px;
   margin: 0 auto;
 }
 
 .content {
   margin-top: 155px;
+}
+
+.btn {
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  background-color: transparent;
+  border: 0;
 }
 
 @media (max-width: 487px) {
