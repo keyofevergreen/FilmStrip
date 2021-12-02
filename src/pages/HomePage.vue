@@ -1,18 +1,19 @@
 <template>
-  <Header/>
-  <main class="wrap content">
-    <FilmSwiper/>
+  <main>
+    <filmstrip-swiper/>
+    <film-list-swiper></film-list-swiper>
   </main>
 </template>
 
 <script>
-import FilmSwiper from "../components/FilmSwiper";
-import Header from "../components/MyHeader";
 import { mapActions } from 'vuex';
+import FilmstripSwiper from "../components/FilmstripSwiper";
+import moment from 'moment';
+import FilmListSwiper from '../components/FilmListSwiper';
 
 export default {
   name: "HomePage",
-  components: { FilmSwiper, Header },
+  components: { FilmstripSwiper, FilmListSwiper },
   data() {
     return {
       films: []
@@ -24,7 +25,10 @@ export default {
     })
   },
   mounted() {
-    this.setFetchedFilms();
+    // Fetching films for the past, current and next month
+    this.setFetchedFilms(moment().subtract(1, 'months'));
+    this.setFetchedFilms(moment());
+    this.setFetchedFilms(moment().add(1, 'months'));
   }
 }
 </script>
