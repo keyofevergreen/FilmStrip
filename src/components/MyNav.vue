@@ -2,7 +2,7 @@
   <div class="menu-line">
     <nav class="wrap menu-line__nav">
       <router-link :to='ref.value' v-for='ref in refs' :key='ref.value' tag="li">
-        <button :value="ref.value">
+        <button :value="ref.value" class="btn">
           {{ ref.label }}
         </button>
       </router-link>
@@ -56,10 +56,7 @@ export default ({
   height: 50px;
   padding-left: 32px;
   padding-right: 32px;
-  font-size: 20px;
   color: #4F5959;
-  border: 0;
-  background-color: transparent;
   transition: transform .5s;
 }
 
@@ -75,7 +72,7 @@ export default ({
 
 @media (max-width: 736px) {
   .menu-line__nav button {
-    font-size: 19px;
+    font-size: 18px;
     padding-left: 15px;
     padding-right: 15px;
   }

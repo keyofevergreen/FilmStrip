@@ -37,7 +37,6 @@ export default {
   right: 0;
   left: 0;
   z-index: 200;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   background-color: #fff;
