@@ -1,6 +1,6 @@
 <template>
   <my-header></my-header>
-  <router-view>
+  <router-view class="wrap content">
   </router-view>
 </template>
 
@@ -43,6 +43,7 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: transparent;
   border: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 487px) {
