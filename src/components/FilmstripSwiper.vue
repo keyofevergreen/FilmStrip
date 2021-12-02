@@ -22,13 +22,13 @@
      }'
       class="mySwiper"
   >
-    <swiper-slide v-for='film in films' :film='film' :key="film.kinopoiskId" class="filmstrip-item">
+    <swiper-slide v-for='film in currentPremiers' :film='film' :key="film.kinopoiskId" class="filmstrip-item">
       <div class="filmstrip-item__perforation top">
         <div></div>
         <div></div>
       </div>
       <div class='filmstrip-item__poster'>
-        <img :src='film.posterUrl' :alt='film.nameRu'>
+        <img :src='film.posterUrlPreview' :alt='film.nameRu'>
       </div>
       <div class="filmstrip-item__perforation down">
         <div></div>
@@ -41,7 +41,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue";
 import "swiper/swiper-bundle.css";
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import SwiperCore, { Autoplay, Navigation } from 'swiper';
 
@@ -54,11 +54,11 @@ export default {
   },
   methods: {},
   computed: {
-    ...mapState({
-      films: state => state.films
+    ...mapGetters({
+      currentPremiers: 'getCurrentPremiers'
     }),
   },
-  name: "FilmSwiper"
+  name: "FilmstripSwiper"
 }
 </script>
 
