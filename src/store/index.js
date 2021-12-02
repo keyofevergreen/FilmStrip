@@ -1,24 +1,33 @@
 import { createStore } from "vuex";
 import moment from "moment";
 
+const CURRENT_DATE = moment();
 export default createStore({
   state: {
     films: [],
-    currentRoute: '',
+    isReleasedFilms: true,
     isAuth: false,
   },
   getters: {
-    getSortedFilms(state) {
-      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') <= moment())
-
-    }
+    // Premiers of the month
+    getCurrentPremiers(state) {
+      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD').format('MM') === CURRENT_DATE.format('MM'))
+    },
+    // Released films before the current date
+    getReleasedFilms(state) {
+      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') <= CURRENT_DATE)
+    },
+    // Unreleased films after the current date
+    getUnreleasedFilms(state) {
+      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') > CURRENT_DATE)
+    },
   },
   mutations: {
     setFetchedFilms(state, films) {
       state.films = [...state.films, ...films];
     },
-    setCurrentRoute(state, newRoute) {
-      state.currentRoute = newRoute;
+    setSortFilms(state, bool) {
+      state.isReleasedFilms = bool;
     }
   },
   actions: {
