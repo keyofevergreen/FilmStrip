@@ -6,11 +6,19 @@
 
 <script>
 import MyHeader from "./components/MyHeader";
+import { mapActions } from 'vuex';
 
 export default {
   name: "App",
   components: { MyHeader },
-  methods: {},
+  methods: {
+    ...mapActions({
+      setFetchedFilms: 'fetchFilms'
+    })
+  },
+  mounted() {
+    this.setFetchedFilms();
+  }
 }
 </script>
 
@@ -21,6 +29,15 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:root {
+  --green: #4FC08D;
+  --pretty-black: #333333;
+  --light-gray: #F6F6F6;
+  --gray: #999DA5;
+  --dark-gray: #4F5959;
+
 }
 
 body {
@@ -36,6 +53,7 @@ body {
 
 .content {
   margin-top: 155px;
+  overflow: hidden;
 }
 
 .btn {
@@ -46,9 +64,21 @@ body {
   cursor: pointer;
 }
 
+@media (max-width: 1140px) {
+  .content {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 811px) {
+  .content {
+    padding: 0 10px;
+  }
+}
 @media (max-width: 487px) {
   .content {
     margin-top: 188px;
+    padding: 0;
   }
 }
 </style>
