@@ -1,62 +1,47 @@
 <template>
-  <div class="films-sort">
-    <div @click="setSortFilms(true)" class='btn' :class='{ active: isReleasedFilms, inactive: !isReleasedFilms }'>
-      <span>Сегодня в кино</span>
-    </div>
-    <div @click="setSortFilms(false)" class='btn' :class='{ active: !isReleasedFilms, inactive: isReleasedFilms }'>
-      <span>Скоро в кино</span>
+  <sort-by-release-buttons/>
+  <div v-if="mode === 'crop'" class="film-list-wrap">
+    <my-film-swiper :filmList="releasedFilms" v-if="isReleasedFilms"/>
+    <my-film-swiper :filmList="unreleasedFilms" v-else/>
+  </div>
+  <div v-else>
+    <div v-if="isReleasedFilms">
+      <film-list-item v-for="film in releasedFilms.slice(0, 5)" :key="film.kinopoiskId" :id="film.kinopoiskId"></film-list-item>
     </div>
   </div>
 </template>
 
 <script>
+import 'swiper/swiper-bundle.css';
+import { mapGetters, mapState } from 'vuex';
+import SortByReleaseButtons from './SortByReleaseButtons';
+import MyFilmSwiper from './UI/MyFilmSwiper';
+import FilmListItem from './FilmListItem';
+
 export default {
-  name: "FilmListCrop",
-  data() {
-    return {
-      isReleasedFilms: true,
-    }
+  name: 'FilmList',
+  props: {
+    mode: String
   },
-  methods: {
-    setSortFilms(bool) {
-      this.isReleasedFilms = bool;
-    }
+  components: {
+    SortByReleaseButtons,
+    MyFilmSwiper,
+    FilmListItem
   },
-  computed: {}
+  computed: {
+    ...mapState({
+      isReleasedFilms: state => state.isReleasedFilms
+    }),
+    ...mapGetters({
+      releasedFilms: 'getReleasedFilms',
+      unreleasedFilms: 'getUnreleasedFilms'
+    })
+  }
 }
 </script>
 
 <style scoped>
-.films-sort {
-  width: 444px;
-  display: flex;
-  gap: 20px;
-  margin: 38px auto 0;
-}
-
-.films-sort div {
-  width: 100%;
-  height: 40px;
-  color: #333333;
-  display: flex;
-  justify-content: center;
-}
-
-.active {
-  border-bottom: 4px solid #4FC08D;
-  transition: transform 0.5s;
-}
-
-.active:hover {
-  transform: scale(1.1);
-}
-
-.inactive {
-  transition: transform 0.5s, color 0.3s;
-}
-
-.inactive:hover {
-  transform: scale(1.1);
-  color: #4FC08D;
+.film-list-wrap {
+  height: 605px;
 }
 </style>
