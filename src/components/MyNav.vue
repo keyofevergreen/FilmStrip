@@ -41,7 +41,7 @@ export default ({
   align-items: center;
   height: 57px;
   font-size: 20px;
-  background-color: #F6F6F6;
+  background-color: var(--light-gray);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -56,7 +56,7 @@ export default ({
   height: 50px;
   padding-left: 32px;
   padding-right: 32px;
-  color: #4F5959;
+  color: var(--dark-gray);
   transition: transform .5s;
 }
 
@@ -67,7 +67,7 @@ export default ({
 .menu-line__nav .router-link-active:hover,
 .menu-line__nav .router-link-active button,
 .menu-line__nav .router-link-exact-active button{
- color: #4FC08D;
+ color: var(--green);
 }
 
 @media (max-width: 736px) {

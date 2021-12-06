@@ -13,7 +13,7 @@
 import { mapMutations, mapState } from 'vuex';
 
 export default {
-  name: "FilmReleaseSort",
+  name: "SortByReleaseButtons",
   methods: {
     ...mapMutations({
       setSort: 'setSortFilms'
@@ -38,26 +38,38 @@ export default {
 .release-sort div {
   width: 100%;
   height: 40px;
-  color: #333333;
+  color: var(--pretty-black);
   display: flex;
   justify-content: center;
 }
 
 .active {
-  border-bottom: 4px solid #4FC08D;
+  border-bottom: 4px solid var(--green);
   transition: transform 0.5s;
-}
-
-.active:hover {
-  transform: scale(1.1);
 }
 
 .inactive {
   transition: transform 0.5s, color 0.3s;
 }
 
+.active:hover {
+  transform: scale(1.1);
+}
+
 .inactive:hover {
   transform: scale(1.1);
-  color: #4FC08D;
+  color: var(--green);
+}
+
+@media (max-width: 768px) {
+  .release-sort {
+    margin: 48px auto 35px;
+  }
+}
+
+@media (max-width: 487px) {
+  .release-sort {
+    padding: 0 20px;
+  }
 }
 </style>
