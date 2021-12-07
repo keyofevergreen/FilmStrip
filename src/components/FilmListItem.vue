@@ -1,40 +1,81 @@
 <template>
   <div v-if="!isFetching">
-    <div class="film-list__item-rating">
-      {{ setDuration(film.duration) }}
+    <div class="film-list__item-card">
+      <div class="item-card__premiere">
+        {{ setPremiere(film.premiereRu) }}
+      </div>
+      <img :src="film.posterUrlPreview" :alt="film.nameRu" class="item-card__poster">
     </div>
-    <img :src="film.posterUrlPreview" :alt="film.nameRu" class="film-list__item-poster">
     <div class="film-list__item-genres">
       <span v-for="genre in film.genres" :key="genre.genre">{{ genre.genre }}</span>
     </div>
     <h4 class="film-list__item-name">{{ film.nameRu }}</h4>
   </div>
   <div v-else class="film-list__item-fetching">
-    <div class="item-fetching__rating">Loading</div>
+    <div class="item-fetching__premiere">Loading</div>
     <div class="item-fetching__poster"></div>
   </div>
 </template>
 
 <script>
+import moment from 'moment';
+import { mapState } from 'vuex';
+
 export default {
   name: 'FilmListItem',
   props: {
     film: Object,
   },
-  data() {
-    return {}
-  },
   methods: {
     setDuration(duration) {
       const lastSymbol = duration.toString().slice(-1);
-      if(lastSymbol === '1') {
+      if (lastSymbol === '1') {
         return `${duration} минута`
       }
-      if(lastSymbol > 1 && lastSymbol < 5) {
+      if (lastSymbol > 1 && lastSymbol < 5) {
         return `${duration} минуты`
       }
       return `${duration} минут`
     },
+    setPremiere(date) {
+      const currentDate = moment();
+      const filmPremiere = moment(date, 'YYYY-MM-DD');
+      const diff = Number(currentDate.diff(filmPremiere, 'days', true));
+      if (diff >= 0) {
+        return filmPremiere.calendar({
+          sameDay: '[Премьера]',
+          lastWeek: '[Новинка]',
+          sameElse: ' '
+        });
+      } else {
+        return filmPremiere.calendar({
+          nextDay: '[Завтра]',
+          nextWeek: '[В кино с] DD.MM',
+          sameElse: '[В кино с] DD.MM'
+        });
+      }
+      // if (diff < 0) {
+      //   if(diff > -1) {
+      //     return 'Завтра';
+      //   }
+      //   else if(diff > -2) {
+      //     return `Через ${Math.abs(diff.toFixed())} день`;
+      //   }
+      //   else {
+      //     return `В кино с ${filmPremiere.format('DD.MM')}`;
+      //   }
+      // }
+      // if(diff >= 0) {
+      //   if(diff < 1) {
+      //     return 'Премьера'
+      //   }
+      //   if(diff < 7) {
+      //     return 'Новинка'
+      //   }
+      // } else {
+      //   return ''
+      // }
+    }
     // setFetching(bool) {
     //   this.isFetching = bool
     // },
@@ -74,12 +115,22 @@ export default {
     //   film(newValue) {
     //     this.ageRatingLimits = this.setAgeRatingLimits(newValue);
     //   }
+  },
+  computed: {
+    ...mapState({
+      isFetching: state => state.isFetchingFilms
+    })
   }
 }
 </script>
 
 <style scoped>
-.film-list__item-rating {
+.film-list__item-card {
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.item-card__premiere {
   height: 32px;
   font-size: 20px;
   color: #fff;
@@ -90,11 +141,10 @@ export default {
   align-items: center;
 }
 
-.film-list__item-poster {
+.item-card__poster {
   display: inline-block;
   width: 100%;
   height: 300px;
-  margin-bottom: 10px;
 }
 
 .film-list__item-genres {
