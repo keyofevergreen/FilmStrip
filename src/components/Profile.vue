@@ -1,8 +1,8 @@
 <template>
   <n-button class="profile-btn" text>
-      <n-icon>
-        <profile-icon/>
-      </n-icon>
+    <n-icon>
+      <profile-icon/>
+    </n-icon>
   </n-button>
 </template>
 
@@ -10,7 +10,7 @@
 import { UserCircle as ProfileIcon } from '@vicons/fa'
 
 export default {
-  name: "PersonalAccount",
+  name: 'PersonalAccount',
   components: {
     ProfileIcon
   },

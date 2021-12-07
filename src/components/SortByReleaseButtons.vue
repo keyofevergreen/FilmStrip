@@ -13,7 +13,7 @@
 import { mapMutations, mapState } from 'vuex';
 
 export default {
-  name: "SortByReleaseButtons",
+  name: 'SortByReleaseButtons',
   methods: {
     ...mapMutations({
       setSort: 'setSortFilms'
