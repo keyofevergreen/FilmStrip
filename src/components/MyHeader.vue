@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import logo from "../assets/logo.svg";
-import Profile from "./Profile";
-import MyNav from "./MyNav";
+import logo from '../assets/logo.svg';
+import Profile from './Profile';
+import MyNav from './MyNav';
 
 export default {
-  name: "my-header",
+  name: 'my-header',
   components: { Profile, MyNav },
   data() {
     return {

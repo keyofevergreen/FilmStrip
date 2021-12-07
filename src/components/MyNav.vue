@@ -17,8 +17,8 @@ export default ({
     return {
       refs: [
         {
-          value: "/online-cinema",
-          label: "Онлайн-кинотеатр",
+          value: '/online-cinema',
+          label: 'Онлайн-кинотеатр',
         },
         {
           value: '/films',
@@ -66,8 +66,8 @@ export default ({
 
 .menu-line__nav .router-link-active:hover,
 .menu-line__nav .router-link-active button,
-.menu-line__nav .router-link-exact-active button{
- color: var(--green);
+.menu-line__nav .router-link-exact-active button {
+  color: var(--green);
 }
 
 @media (max-width: 736px) {
