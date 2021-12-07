@@ -1,34 +1,21 @@
 <template>
   <main>
     <filmstrip-swiper/>
-    <film-list-swiper></film-list-swiper>
+    <film-list :mode="'crop'"></film-list>
   </main>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import FilmstripSwiper from "../components/FilmstripSwiper";
-import moment from 'moment';
-import FilmListSwiper from '../components/FilmListSwiper';
+import FilmList from '../components/FilmList';
 
 export default {
   name: "HomePage",
-  components: { FilmstripSwiper, FilmListSwiper },
+  components: { FilmstripSwiper, FilmList },
   data() {
     return {
       films: []
     }
-  },
-  methods: {
-    ...mapActions({
-      setFetchedFilms: 'fetchFilms'
-    })
-  },
-  mounted() {
-    // Fetching films for the past, current and next month
-    this.setFetchedFilms(moment().subtract(1, 'months'));
-    this.setFetchedFilms(moment());
-    this.setFetchedFilms(moment().add(1, 'months'));
   }
 }
 </script>
