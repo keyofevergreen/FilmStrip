@@ -1,13 +1,13 @@
 <template>
   <div v-if="!isFetching">
-    <div class="film-list__item-card">
+    <div class="film-list__item-card" @click="$router.push(`/films/${film.kinopoiskId}`)">
       <div class="item-card__premiere">
         {{ setPremiere(film.premiereRu) }}
       </div>
       <img :src="film.posterUrlPreview" :alt="film.nameRu" class="item-card__poster">
     </div>
     <div class="film-list__item-genres">
-      <span v-for="genre in film.genres" :key="genre.genre">{{ genre.genre }}</span>
+      {{film.genres.map(genre => genre.genre).join(', ')}}
     </div>
     <h4 class="film-list__item-name">{{ film.nameRu }}</h4>
   </div>
@@ -27,16 +27,6 @@ export default {
     film: Object,
   },
   methods: {
-    setDuration(duration) {
-      const lastSymbol = duration.toString().slice(-1);
-      if (lastSymbol === '1') {
-        return `${duration} минута`
-      }
-      if (lastSymbol > 1 && lastSymbol < 5) {
-        return `${duration} минуты`
-      }
-      return `${duration} минут`
-    },
     setPremiere(date) {
       const currentDate = moment();
       const filmPremiere = moment(date, 'YYYY-MM-DD');
@@ -44,6 +34,7 @@ export default {
       if (diff >= 0) {
         return filmPremiere.calendar({
           sameDay: '[Премьера]',
+          lastDay: '[Новинка]',
           lastWeek: '[Новинка]',
           sameElse: ' '
         });
@@ -54,67 +45,7 @@ export default {
           sameElse: '[В кино с] DD.MM'
         });
       }
-      // if (diff < 0) {
-      //   if(diff > -1) {
-      //     return 'Завтра';
-      //   }
-      //   else if(diff > -2) {
-      //     return `Через ${Math.abs(diff.toFixed())} день`;
-      //   }
-      //   else {
-      //     return `В кино с ${filmPremiere.format('DD.MM')}`;
-      //   }
-      // }
-      // if(diff >= 0) {
-      //   if(diff < 1) {
-      //     return 'Премьера'
-      //   }
-      //   if(diff < 7) {
-      //     return 'Новинка'
-      //   }
-      // } else {
-      //   return ''
-      // }
     }
-    // setFetching(bool) {
-    //   this.isFetching = bool
-    // },
-    // setFilm(film) {
-    //   this.film = film;
-    // },
-    // async fetchFilm(id) {
-    //   try {
-    //     this.setFetching(true);
-    //     const response = await fetch(`https://kinopoiskapiunofficial.tech//api/v2.2/films/${id}`, {
-    //       method: 'GET',
-    //       headers: {
-    //         'X-API-KEY': 'bbd5c8d2-662f-428b-9b73-5fb961a663ad',
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
-    //     const film = await response.json();
-    //     await this.setFilm(film)
-    //   } catch (e) {
-    //     console.error(e)
-    //   } finally {
-    //     this.setFetching(false);
-    //   }
-    // },
-    //   setAgeRatingLimits(film) {
-    //     if (film.ratingAgeLimits === null) {
-    //       return '0+'
-    //     } else {
-    //       return `${film.ratingAgeLimits.match(/\d{1,2}/g)}+`
-    //     }
-    //   }
-    // },
-    // mounted() {
-    //   this.fetchFilm(this.id)
-    // },
-    // watch: {
-    //   film(newValue) {
-    //     this.ageRatingLimits = this.setAgeRatingLimits(newValue);
-    //   }
   },
   computed: {
     ...mapState({
@@ -128,6 +59,7 @@ export default {
 .film-list__item-card {
   margin-bottom: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .item-card__premiere {
@@ -168,7 +100,7 @@ export default {
   border: 4px dashed var(--pretty-black);
 }
 
-.item-fetching__rating {
+.item-fetching__premiere {
   height: 32px;
   font-size: 20px;
   border-bottom: 4px dashed var(--pretty-black);
@@ -189,4 +121,9 @@ export default {
   -o-background-size: 100% 100%;
   background-size: 100% 100%;
 }
+.film-list__item-card:hover .item-card__premiere {
+  transition: background-color .5s;
+  background-color: #51EDA7;
+}
+
 </style>
