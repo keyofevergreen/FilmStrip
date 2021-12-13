@@ -55,7 +55,6 @@ export default {
 
 <style scoped>
 .swiper {
-  margin-top: 20px;
   padding: 10px;
   background: #000;
 }
