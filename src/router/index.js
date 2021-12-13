@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage";
 import FilmListPage from "../pages/FilmListPage";
+import FilmPage from '../pages/FilmPage';
 
 const routes = [
   {
@@ -12,6 +13,12 @@ const routes = [
     path: "/films",
     name: "Films",
     component: FilmListPage,
+  },
+  {
+    path: "/films/:id",
+    name: "Film",
+    component: FilmPage,
+    props: true
   },
   {
     path: "/online-cinema",
