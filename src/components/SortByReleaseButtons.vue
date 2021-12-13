@@ -1,9 +1,9 @@
 <template>
   <div class="release-sort">
-    <div @click="setSort(true)" class='btn' :class='{ active: isReleasedFilms, inactive: !isReleasedFilms }'>
+    <div @click="setSort('released')" class='btn' :class='isReleasedFilms === "released" ? "active" : "inactive"'>
       <span>Сегодня в кино</span>
     </div>
-    <div @click="setSort(false)" class='btn' :class='{ active: !isReleasedFilms, inactive: isReleasedFilms }'>
+    <div @click="setSort('unreleased')" class='btn' :class='isReleasedFilms === "unreleased" ? "active" : "inactive"'>
       <span>Скоро в кино</span>
     </div>
   </div>
@@ -16,12 +16,13 @@ export default {
   name: 'SortByReleaseButtons',
   methods: {
     ...mapMutations({
-      setSort: 'setSortFilms'
+      setSort: 'setReleaseSort'
     })
   },
+
   computed: {
     ...mapState({
-      isReleasedFilms: state => state.isReleasedFilms
+      isReleasedFilms: state => state.selectedReleaseSort
     }),
   }
 }
