@@ -6,12 +6,14 @@ const CURRENT_DATE = moment();
 const NEXT_MONTH = moment().add(1, 'months')
 // Need to get films in three months: past, present and next
 const MONTHS = [LAST_MONTH, CURRENT_DATE, NEXT_MONTH]
-
 export default createStore({
   state: {
     films: [],
+    releasedFilms: [],
+    unreleasedFilms: [],
     isFetchingFilms: false,
-    isReleasedFilms: true,
+    selectedReleaseSort: 'released',
+    selectedGenresSort: '',
     isAuth: false,
   },
   getters: {
@@ -19,23 +21,48 @@ export default createStore({
     getCurrentPremiers(state) {
       return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD').format('MM') === CURRENT_DATE.format('MM'))
     },
-    // Released films before the current date in descending order of release date
-    getReleasedFilms(state) {
-      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') <= CURRENT_DATE).reverse()
-    },
-    getUnreleasedFilms(state) {
-      return state.films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') > CURRENT_DATE && moment(film.premiereRu, 'YYYY-MM-DD') < NEXT_MONTH)
-    },
+    getFilmsAfterSorts(state) {
+      const filterByGenres = (films) => {
+        if (state.selectedGenresSort) {
+          return films.filter(film => {
+            for (const genre of film.genres) {
+              if (genre.genre === state.selectedGenresSort) {
+                return true;
+              }
+            }
+          })
+        } else {
+          return films;
+        }
+      }
+      if (state.selectedReleaseSort === 'released') {
+        return filterByGenres(state.releasedFilms);
+      } else {
+        return filterByGenres(state.unreleasedFilms);
+      }
+    }
   },
   mutations: {
-    setFetchedFilms(state, films) {
-        state.films = [...state.films, ...films];
+    setFilms(state, films) {
+      state.films = [...state.films, ...films];
+    },
+    setReleasedFilms(state, films) {
+      // Released films before the current date in descending order of release date
+      const releasedFilms = films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') <= CURRENT_DATE).reverse();
+      state.releasedFilms = [...releasedFilms, ...state.releasedFilms];
+    },
+    setUnreleasedFilms(state, films) {
+      const unreleasedFilms = films.filter(film => moment(film.premiereRu, 'YYYY-MM-DD') > CURRENT_DATE && moment(film.premiereRu, 'YYYY-MM-DD') < NEXT_MONTH);
+      state.unreleasedFilms = [...state.unreleasedFilms, ...unreleasedFilms]
     },
     setFetchingFilms(state, bool) {
       state.isFetchingFilms = bool;
     },
-    setSortFilms(state, bool) {
-      state.isReleasedFilms = bool;
+    setReleaseSort(state, bool) {
+      state.selectedReleaseSort = bool;
+    },
+    setGenresSort(state, genres) {
+      state.selectedGenresSort = genres;
     }
   },
   actions: {
@@ -52,7 +79,9 @@ export default createStore({
             },
           })
           const data = await response.json();
-          await commit('setFetchedFilms', data.items);
+          await commit('setFilms', data.items);
+          await commit('setReleasedFilms', data.items)
+          await commit('setUnreleasedFilms', data.items)
         } catch (err) {
           console.error(err);
         } finally {
