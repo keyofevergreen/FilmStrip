@@ -1,17 +1,15 @@
 <template>
-  <my-select v-if="mode === 'full'"></my-select>
   <sort-by-release-buttons/>
-  <div v-if="mode === 'full'">
-    <div v-if="isReleasedFilms" class="film-list-full">
-      <film-list-item v-for="film in releasedFilms" :key="film.kinopoiskId" :film="film"></film-list-item>
-    </div>
-    <div v-else class="film-list-full">
-      <film-list-item v-for="film in unreleasedFilms" :key="film.kinopoiskId" :film="film"></film-list-item>
-    </div>
+  <div v-if="mode === 'full'" class="film-list-full">
+    <film-list-item
+        v-for="film in films"
+        :key="film.kinopoiskId"
+        :film="film"
+    >
+    </film-list-item>
   </div>
   <div v-else class="film-list-crop">
-    <my-film-swiper :filmList="releasedFilms" v-if="isReleasedFilms"/>
-    <my-film-swiper :filmList="unreleasedFilms" v-else/>
+    <my-film-swiper :filmList="films"/>
   </div>
 </template>
 
@@ -21,7 +19,6 @@ import { mapGetters, mapState } from 'vuex';
 import SortByReleaseButtons from './SortByReleaseButtons';
 import MyFilmSwiper from './UI/MyFilmSwiper';
 import FilmListItem from './FilmListItem';
-import MySelect from './UI/MySelect';
 
 export default {
   name: 'FilmList',
@@ -32,17 +29,16 @@ export default {
     SortByReleaseButtons,
     MyFilmSwiper,
     FilmListItem,
-    MySelect
   },
   computed: {
     ...mapState({
-      isReleasedFilms: state => state.isReleasedFilms
+      isReleasedFilms: state => state.selectedReleaseSort,
+      selectedGenreSort: state => state.selectedGenreSort
     }),
     ...mapGetters({
-      releasedFilms: 'getReleasedFilms',
-      unreleasedFilms: 'getUnreleasedFilms'
-    })
-  },
+      films: 'getFilmsAfterSorts',
+    }),
+  }
 }
 </script>
 
@@ -50,7 +46,7 @@ export default {
 .film-list-full {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
 
 @media (max-width: 440px) {
