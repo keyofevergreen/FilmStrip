@@ -75,7 +75,7 @@ export default {
 }
 
 .film-list__dashed-card {
-  height: 332px;
+  height: 339px;
   border: 4px dashed var(--pretty-black);
   transition: fill 0.3s, border-color 0.3s;
 }
