@@ -11,9 +11,178 @@ export default createStore({
     films: [],
     releasedFilms: [],
     unreleasedFilms: [],
+    selectedFilm: null,
+    trailersUrlOfSelectedFilm: null,
+    ageLimitsOfSelectedFilm: null,
     isFetchingFilms: false,
     selectedReleaseSort: 'released',
     selectedGenresSort: '',
+    cinemas: [
+      {
+        name: 'Кронверк Вью МЕГА JS',
+        address: 'площадь Приведения Типов 13, корпус 3, «МЕГА JS», NaN-й этаж',
+        id: 666,
+        formats: [
+          {
+            format: '2D',
+            sessions: [
+              {
+                time: '11:20',
+                price: '200',
+                hall: 1
+              },
+              {
+                time: '13:15',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '16:10',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '18:05',
+                price: '300',
+                hall: 1
+              },
+              {
+                time: '21:20',
+                price: '300',
+                hall: 1
+              },
+              {
+                time: '23:55',
+                price: '200',
+                hall: 1
+              }
+            ]
+          },
+          {
+            format: '3D',
+            sessions: [
+              {
+                time: '11:20',
+                price: '200',
+                hall: 1
+              },
+              {
+                time: '13:15',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '16:10',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '18:05',
+                price: '300',
+                hall: 1
+              },
+              {
+                time: '21:20',
+                price: '300',
+                hall: 1
+              },
+              {
+                time: '23:55',
+                price: '200',
+                hall: 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Async Синема',
+        address: 'Булиевое шоссе 14, «ТЦ AWAIT», 4-й этаж',
+        id: 999,
+        formats: [
+          {
+            format: '2D',
+            sessions: [
+              {
+                time: '11:20',
+                price: '200',
+                hall: 1
+              },
+              {
+                time: '14:10',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '15:30',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '16:25',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '17:40',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '18:35',
+                price: '300',
+                hall: 1
+              },
+              {
+                time: '22:10',
+                price: '250',
+                hall: 1
+              },
+              {
+                time: '23:05',
+                price: '200',
+                hall: 1
+              }
+            ]
+          },
+          {
+            format: 'IMAX',
+            sessions: [
+              {
+                time: '10:20',
+                price: '400',
+                hall: 1
+              },
+              {
+                time: '14:55',
+                price: '450',
+                hall: 1
+              },
+              {
+                time: '17:20',
+                price: '450',
+                hall: 1
+              },
+              {
+                time: '17:55',
+                price: '510',
+                hall: 1
+              },
+              {
+                time: '20:35',
+                price: '510',
+                hall: 1
+              },
+              {
+                time: '23:25',
+                price: '450',
+                hall: 1
+              }
+            ]
+          }
+        ]
+      }],
+    ticketsPickerModalVisible: false,
     isAuth: false,
   },
   getters: {
@@ -63,6 +232,18 @@ export default createStore({
     },
     setGenresSort(state, genres) {
       state.selectedGenresSort = genres;
+    },
+    setSelectedFilm(state, film) {
+      state.selectedFilm = film;
+    },
+    setTrailerUrlOfSelectedFilm(state, url) {
+      state.trailersUrlOfSelectedFilm = url;
+    },
+    setAgeLimitsOfSelectedFilm(state, ageLimits) {
+      state.ageLimitsOfSelectedFilm = ageLimits;
+    },
+    setTicketsPickerModalVisible(state, bool) {
+      state.ticketsPickerModalVisible = bool;
     }
   },
   actions: {
