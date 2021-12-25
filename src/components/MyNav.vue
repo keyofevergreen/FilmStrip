@@ -41,7 +41,7 @@ export default ({
   align-items: center;
   height: 57px;
   font-size: 20px;
-  background-color: var(--light-gray);
+  background-color: var(--light-grey);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -56,7 +56,7 @@ export default ({
   height: 50px;
   padding-left: 32px;
   padding-right: 32px;
-  color: var(--dark-gray);
+  color: var(--dark-grey);
   transition: transform .5s;
 }
 

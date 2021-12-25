@@ -34,9 +34,9 @@ export default {
 :root {
   --green: #4FC08D;
   --pretty-black: #333333;
-  --light-gray: #F6F6F6;
-  --gray: #999DA5;
-  --dark-gray: #4F5959;
+  --light-grey: #F6F6F6;
+  --grey: #999DA5;
+  --dark-grey: #4F5959;
 
 }
 
@@ -62,6 +62,11 @@ body {
   background-color: transparent;
   border: 0;
   cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  gap: 15px;
 }
 
 @media (max-width: 1140px) {

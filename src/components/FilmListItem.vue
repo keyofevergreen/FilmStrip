@@ -85,7 +85,7 @@ export default {
   gap: 5px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--gray);
+  color: var(--grey);
   margin-bottom: 10px;
 }
 
