@@ -11,20 +11,20 @@
           <div class="sessions__container">
             <session-item v-for="session in format.sessions"
                           :key="`${session.time}-${session.hall}-${format.format}`"
-                          :session="{time: session.time, price: session.price, format: format.format, cinema: {name: cinema.name, address: cinema.address}}"></session-item>
+                          :session="{time: session.time, price: session.price, hall: session.hall, format: format.format, cinema: {name: cinema.name, address: cinema.address}}"></session-item>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <tickets-picker-modal></tickets-picker-modal>
+  <order-process-modal></order-process-modal>
 </template>
 
 <script>
 import SessionItem from './SessionItem';
 import 'ant-design-vue/dist/antd.css';
-import TicketsPickerModal from './TicketsPickerModal';
+import OrderProcessModal from './OrderProcessModal';
 
 export default {
   name: 'SessionSchedule',
@@ -34,8 +34,8 @@ export default {
     }
   },
   components: {
-    SessionItem,
-    TicketsPickerModal
+    OrderProcessModal,
+    SessionItem
   }
 }
 </script>
