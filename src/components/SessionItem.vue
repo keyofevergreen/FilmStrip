@@ -1,6 +1,6 @@
 <template>
   <div class="session-item">
-    <button class="session-item__time" @click="onclick">{{ session.time }}</button>
+    <button class="session-item__time" @click="setSession(session)">{{ session.time }}</button>
     <span class="session-item__price">{{ session.price }} ₽</span>
   </div>
 </template>
@@ -13,15 +13,17 @@ export default {
   props: {
     session: {
       type: Object
-    },
-    onclick: {
-      type: Function
     }
   },
   methods: {
     ...mapMutations({
-      setWarningModalVisible: 'setWarningModalVisible'
-    })
+      setTicketsPickerModalVisible: 'setTicketsPickerModalVisible',
+      setSelectedSession: 'setSelectedSession'
+    }),
+    setSession(session) {
+      this.setTicketsPickerModalVisible(true);
+      this.setSelectedSession(session);
+    }
   }
 }
 </script>
