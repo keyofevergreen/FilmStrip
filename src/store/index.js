@@ -12,6 +12,8 @@ export default createStore({
     releasedFilms: [],
     unreleasedFilms: [],
     selectedFilm: null,
+    selectedSession: null,
+    selectedTickets: [],
     trailersUrlOfSelectedFilm: null,
     ageLimitsOfSelectedFilm: null,
     isFetchingFilms: false,
@@ -29,32 +31,32 @@ export default createStore({
               {
                 time: '11:20',
                 price: '200',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '13:15',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '16:10',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '18:05',
                 price: '300',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '21:20',
                 price: '300',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '23:55',
                 price: '200',
-                hall: 1
+                hall: '01'
               }
             ]
           },
@@ -64,32 +66,32 @@ export default createStore({
               {
                 time: '11:20',
                 price: '200',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '13:15',
                 price: '250',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '16:10',
                 price: '250',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '18:05',
                 price: '300',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '21:20',
                 price: '300',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '23:55',
                 price: '200',
-                hall: 1
+                hall: '02'
               }
             ]
           }
@@ -106,42 +108,42 @@ export default createStore({
               {
                 time: '11:20',
                 price: '200',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '14:10',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '15:30',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '16:25',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '17:40',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '18:35',
                 price: '300',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '22:10',
                 price: '250',
-                hall: 1
+                hall: '01'
               },
               {
                 time: '23:05',
                 price: '200',
-                hall: 1
+                hall: '01'
               }
             ]
           },
@@ -151,32 +153,32 @@ export default createStore({
               {
                 time: '10:20',
                 price: '400',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '14:55',
                 price: '450',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '17:20',
                 price: '450',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '17:55',
                 price: '510',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '20:35',
                 price: '510',
-                hall: 1
+                hall: '02'
               },
               {
                 time: '23:25',
                 price: '450',
-                hall: 1
+                hall: '02'
               }
             ]
           }
@@ -209,6 +211,9 @@ export default createStore({
       } else {
         return filterByGenres(state.unreleasedFilms);
       }
+    },
+    getIsLimitOfTickets(state) {
+      return state.selectedTickets.length >= 5;
     }
   },
   mutations: {
@@ -244,6 +249,18 @@ export default createStore({
     },
     setTicketsPickerModalVisible(state, bool) {
       state.ticketsPickerModalVisible = bool;
+    },
+    setSelectedSession(state, session) {
+      state.selectedSession = session;
+    },
+    setTicket(state, ticket) {
+      state.selectedTickets = [...state.selectedTickets, ticket]
+    },
+    removeTicket(state, id) {
+      state.selectedTickets = state.selectedTickets.filter(selectedTicket => selectedTicket.id !== id )
+    },
+    clearTickets(state) {
+      state.selectedTickets = [];
     }
   },
   actions: {
