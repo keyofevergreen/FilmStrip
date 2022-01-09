@@ -32,17 +32,24 @@ export default {
 }
 
 :root {
-  --green: #4FC08D;
+  --green: #4fc08d;
+  --light-green: #51eda7;
   --pretty-black: #333333;
-  --light-grey: #F6F6F6;
-  --grey: #999DA5;
-  --dark-grey: #4F5959;
+  --light-grey: #f6f6f6;
+  --grey: #999da5;
+  --dark-grey: #4f5959;
+  --red: #d93025;
 
 }
 
 body {
   font-family: 'Inter', sans-serif;
   min-width: 365px;
+  color: var(--pretty-black);
+}
+
+h1, h2, h3, h4 {
+  color: var(--pretty-black);
 }
 
 .wrap {
@@ -62,11 +69,6 @@ body {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-}
-
-.flex {
-  display: flex;
-  gap: 15px;
 }
 
 @media (max-width: 1140px) {
