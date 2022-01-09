@@ -26,7 +26,7 @@
       <a-button v-if="current === 0" type="primary" @click="next">
         Продолжить
       </a-button>
-      <chosen-seats-info v-if="current === 1 && tickets.length > 0"></chosen-seats-info>
+      <chosen-seats-info v-if="current === 1 && tickets.length > 0" type="crop"></chosen-seats-info>
       <a-button v-if="current === 1" type="primary" @click="next"
                 :disabled="isDisabled">
         Перейти к оплате

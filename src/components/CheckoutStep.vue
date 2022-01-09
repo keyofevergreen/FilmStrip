@@ -2,8 +2,8 @@
   <a-popover>
     <template #content>
       <div class="timer-description">
-        <p>На время оплаты Ваши билеты забронированы, чтобы их могли купить только Вы.</p>
-        <p>Но если Вы не произведете оплату по окончанию таймера, бронь с билетов будет снята 😥</p>
+        <p>На время оплаты {{ tickets.length > 1 ? 'Ваши билеты забронированы, чтобы их могли' : 'Ваш билет забронирован, чтобы его могли' }} купить только Вы.</p>
+        <p>Но если Вы не произведете оплату по окончанию таймера, бронь с {{ tickets.length > 1 ? 'билетов' : 'билета' }} будет снята 😥</p>
       </div>
     </template>
     <my-timer v-if="!isTimeExpired" :duration="900" :callback="setExpiredCallback" class="checkout-timer"></my-timer>
@@ -21,22 +21,7 @@
             <my-tag :text="ageLimits" type="dotted"></my-tag>
             <my-tag :text="session.format" type="green"></my-tag>
           </div>
-          <div class='pay-left-col__cinema-address'>
-            <p>{{ session.cinema.name }}, Зал {{ session.hall }}</p>
-            <p>{{session.cinema.address}}</p>
-          </div>
-          <p class="pay-left-col__session-time">Сегодня в {{session.time}}</p>
-          <div class="pay-left-col__order-info">
-            <h3>{{getCountInfoAboutTickets}}</h3>
-            <div class="order-info__ticket-item-wrap">
-              <div class="pay-left-col__order-info__ticket-item" v-for="ticket in tickets" :key="ticket.id">
-                <div class="ticket-item__seat-info">Ряд {{ticket.row}}, Место {{ticket.seat}}</div>
-                <div class="ticket-item__dotted-line"></div>
-                <div class="ticket-item__seat-price">{{session.price}}₽</div>
-              </div>
-            </div>
-            <div class="pay-left-col__order-info__total-price">Итого: {{tickets.length * session.price}}₽</div>
-          </div>
+          <chosen-seats-info type="full"></chosen-seats-info>
         </div>
       </div>
       <div>
@@ -53,10 +38,11 @@
 import MyTimer from './UI/MyTimer';
 import { mapGetters, mapMutations, mapState } from 'vuex';
 import MyTag from './UI/MyTag';
+import ChosenSeatsInfo from './ChosenSeatsInfo';
 
 export default {
   name: 'CheckoutStep',
-  components: { MyTimer, MyTag },
+  components: { MyTimer, MyTag, ChosenSeatsInfo },
   data() {
     return {};
   },
@@ -130,54 +116,6 @@ export default {
   align-items: center;
   gap: 15px;
   margin-bottom: 10px;
-}
-
-.pay-left-col__cinema-address p {
-  color: var(--grey);
-  margin-bottom: 0;
-}
-
-.pay-left-col__session-time {
-  font-size: 17px;
-  padding-bottom: 10px;
-  border-bottom: 2px dashed var(--green);
-}
-
-.pay-left-col__order-info {
-  overflow: auto;
-}
-
-.order-info__ticket-item-wrap {
-  padding-bottom: 20px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid var(--light-grey);
-}
-
-.pay-left-col__order-info__ticket-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ticket-item__seat-info {
-  min-width: 100px;
-}
-
-.ticket-item__dotted-line {
-  width: 100%;
-  margin: 0 4px;
-  border-bottom: 0.5px dashed var(--grey);
-}
-
-.ticket-item__seat-price {
-  text-align: right;
-  min-width: 35px;
-}
-
-.pay-left-col__order-info__total-price {
-  font-weight: 600;
-  font-size: 17px;
-  text-align: right;
 }
 
 .header-expired-wrap {
