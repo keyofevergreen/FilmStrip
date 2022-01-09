@@ -1,15 +1,18 @@
 <template>
-  <span class="tag">
+  <span class="tag" :class="type ? type : ''">
     {{ text }}
   </span>
 </template>
 
 <script>
 export default {
-  name: 'MyOldRatingTag',
+  name: 'MyTag',
   props: {
     text: {
-      type: String, Number
+      type: [String, Number]
+    },
+    type: {
+      type: String
     }
   }
 }
@@ -26,5 +29,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.green {
+  color: #fff;
+  background-color: var(--green);
+}
+
+.dotted {
+  border: 1px dashed var(--pretty-black);
 }
 </style>

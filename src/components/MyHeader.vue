@@ -1,7 +1,7 @@
 <template>
   <header class="cinema-header">
-    <div class="logo-line">
-      <div class="wrap space-between">
+    <div class="logo-line-wrap">
+      <div class="wrap logo-line">
         <router-link to="/">
           <svg xmlns="http://www.w3.org/2000/svg" class="logo-line__logo">
             <use :href='href'></use>
@@ -43,7 +43,7 @@ export default {
 }
 
 
-.logo-line {
+.logo-line-wrap {
   width: 100%;
   height: 68px;
   z-index: 100;
@@ -55,10 +55,14 @@ export default {
   width: 236px;
 }
 
-.space-between {
+.logo-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo-line a {
+  max-height: 68px;
 }
 
 @media (max-width: 736px) {
@@ -69,6 +73,14 @@ export default {
 }
 
 @media (max-width: 487px) {
+  .logo-line-wrap {
+    height: 58px;
+  }
+
+  .logo-line a {
+    max-height: 58px;
+  }
+
   .logo-line {
     height: 58px;
   }

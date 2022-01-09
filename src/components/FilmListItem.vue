@@ -123,7 +123,7 @@ export default {
 }
 .film-list__item-card:hover .item-card__premiere {
   transition: background-color .5s;
-  background-color: #51EDA7;
+  background-color: var(--light-green);
 }
 
 </style>

@@ -64,9 +64,9 @@ export default {
   data() {
     return {
       svgHref: `${ticket}#ticket`
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

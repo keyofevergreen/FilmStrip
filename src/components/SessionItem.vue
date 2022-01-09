@@ -17,11 +17,11 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setTicketsPickerModalVisible: 'setTicketsPickerModalVisible',
+      setCheckoutModalVisible: 'setCheckoutModalVisible',
       setSelectedSession: 'setSelectedSession'
     }),
     setSession(session) {
-      this.setTicketsPickerModalVisible(true);
+      this.setCheckoutModalVisible(true);
       this.setSelectedSession(session);
     }
   }

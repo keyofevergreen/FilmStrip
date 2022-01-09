@@ -18,13 +18,13 @@
     </div>
   </div>
 
-  <order-process-modal></order-process-modal>
+  <checkout-modal></checkout-modal>
 </template>
 
 <script>
 import SessionItem from './SessionItem';
 import 'ant-design-vue/dist/antd.css';
-import OrderProcessModal from './OrderProcessModal';
+import CheckoutModal from './CheckoutModal';
 
 export default {
   name: 'SessionSchedule',
@@ -34,7 +34,7 @@ export default {
     }
   },
   components: {
-    OrderProcessModal,
+    CheckoutModal,
     SessionItem
   }
 }

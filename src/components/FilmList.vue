@@ -36,7 +36,7 @@ export default {
       selectedGenreSort: state => state.selectedGenreSort
     }),
     ...mapGetters({
-      films: 'getFilmsAfterSorts',
+      films: 'filmsAfterSorts',
     }),
   }
 }

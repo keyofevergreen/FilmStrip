@@ -46,7 +46,7 @@ export default {
   methods: {},
   computed: {
     ...mapGetters({
-      currentPremiers: 'getCurrentPremiers'
+      currentPremiers: 'currentPremiers'
     }),
   },
   name: 'FilmstripSwiper'

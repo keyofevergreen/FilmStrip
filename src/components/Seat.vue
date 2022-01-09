@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${contains(tickets, id) ? 'selected' : ''} ${isLimit ? 'locked' : ''} ${isOccupied ? 'occupied' : ''}`" @click="handlerChange()"></div>
+  <div :class="`${contains(tickets, id) ? 'selected' : ''} ${isLimit ? 'locked' : ''} ${isOccupied ? 'occupied' : ''}`" @click="handlerChange()">{{contains(tickets, id) ? seatInRow : null}}</div>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ export default {
       tickets: state => state.selectedTickets
     }),
     ...mapGetters({
-      isLimit: 'getIsLimitOfTickets'
+      isLimit: 'isLimitOfTickets'
     })
   },
 }
