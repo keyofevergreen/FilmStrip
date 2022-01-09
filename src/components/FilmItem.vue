@@ -10,13 +10,18 @@
       <h1 class="film-item__header">{{ film.nameRu }}</h1>
       <p class="film-item__country">{{ film.nameOriginal }} ({{ film.year }},
         {{ film.countries.map(country => country.country).join(', ') }})</p>
-      <div class="flex film-item__tags">
-        <my-tag :text="ageLimits" class="film-item__tags-age-limit"></my-tag>
-        <my-tag
-            v-if="film.ratingImdb || film.ratingKinopoisk"
-            :text="film.ratingImdb || film.ratingKinopoisk"
-            class="film-item__tags-rating">
-        </my-tag>
+      <div class="film-item__tags">
+        <my-tag :text="ageLimits" type="dotted"></my-tag>
+        <a-popover>
+          <template #content>
+            Рейтинг фильма по версии {{film.ratingImdb ? 'Imdb' : 'Кинопоиска'}}
+          </template>
+          <my-tag
+              v-if="film.ratingImdb || film.ratingKinopoisk"
+              :text="film.ratingImdb || film.ratingKinopoisk"
+              type="green">
+          </my-tag>
+        </a-popover>
       </div>
       <p class="film-item__genres">{{ film.genres.length > 1 ? 'Жанры: ' : 'Жанр: ' }}
         {{ film.genres.map(genre => genre.genre).join(', ') }}</p>
@@ -108,16 +113,9 @@ export default {
 }
 
 .film-item__tags {
+  display: flex;
+  gap: 15px;
   margin-bottom: 5px;
-}
-
-.film-item__tags-age-limit {
-  border: 1px dashed var(--pretty-black);
-}
-
-.film-item__tags-rating {
-  color: #fff;
-  background-color: var(--green);
 }
 
 @media (max-width: 440px) {
