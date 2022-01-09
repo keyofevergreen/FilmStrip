@@ -1,0 +1,204 @@
+<template>
+  <a-popover>
+    <template #content>
+      <div class="timer-description">
+        <p>На время оплаты Ваши билеты забронированы, чтобы их могли купить только Вы.</p>
+        <p>Но если Вы не произведете оплату по окончанию таймера, бронь с билетов будет снята 😥</p>
+      </div>
+    </template>
+    <my-timer v-if="!isTimeExpired" :duration="900" :callback="setExpiredCallback" class="checkout-timer"></my-timer>
+  </a-popover>
+  <div v-if="isTimeExpired === false" class="checkout-step-content">
+    <div class="step-header-wrap">
+      <h1 class="step-header">{{ tickets.length > 1 ? 'Ваши билеты почти готовы!' : 'Ваш билет почти готов!' }} Осталось дело за малым..</h1>
+      <h2 class="step-header-description">Проверьте Ваш заказ и выберете удобный способ оплаты.</h2>
+    </div>
+    <div class="pay-wrap">
+      <div>
+        <div class="pay-left-col">
+          <h1 class="pay-left-col__film-name">{{film.nameRu}}</h1>
+          <div class="pay-left-col__tags-container">
+            <my-tag :text="ageLimits" type="dotted"></my-tag>
+            <my-tag :text="session.format" type="green"></my-tag>
+          </div>
+          <div class='pay-left-col__cinema-address'>
+            <p>{{ session.cinema.name }}, Зал {{ session.hall }}</p>
+            <p>{{session.cinema.address}}</p>
+          </div>
+          <p class="pay-left-col__session-time">Сегодня в {{session.time}}</p>
+          <div class="pay-left-col__order-info">
+            <h3>{{getCountInfoAboutTickets}}</h3>
+            <div class="order-info__ticket-item-wrap">
+              <div class="pay-left-col__order-info__ticket-item" v-for="ticket in tickets" :key="ticket.id">
+                <div class="ticket-item__seat-info">Ряд {{ticket.row}}, Место {{ticket.seat}}</div>
+                <div class="ticket-item__dotted-line"></div>
+                <div class="ticket-item__seat-price">{{session.price}}₽</div>
+              </div>
+            </div>
+            <div class="pay-left-col__order-info__total-price">Итого: {{tickets.length * session.price}}₽</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-checkout">Оплатить жопой</button>
+      </div>
+    </div>
+    </div>
+  <div v-else class="header-expired-wrap">
+    <h1 class="step-header">Извините, время на оплату вышло.</h1>
+    <h3 class="step-description">Приносим извинения за доставленные неудобства 😢</h3>
+  </div>
+</template>
+<script>
+import MyTimer from './UI/MyTimer';
+import { mapGetters, mapMutations, mapState } from 'vuex';
+import MyTag from './UI/MyTag';
+
+export default {
+  name: 'CheckoutStep',
+  components: { MyTimer, MyTag },
+  data() {
+    return {};
+  },
+  methods: {
+    ...mapMutations({
+      setIsTimeExpired: 'setIsTimeExpired',
+      clearTickets: 'clearTickets'
+    }),
+    setExpiredCallback() {
+      this.setIsTimeExpired(true);
+      this.clearTickets();
+    }
+  },
+  computed: {
+    ...mapState({
+      isTimeExpired: state => state.isTimeExpired,
+      tickets: state => state.selectedTickets,
+      session: state => state.selectedSession,
+      film: state => state.selectedFilm,
+      ageLimits: state => state.ageLimitsOfSelectedFilm
+    }),
+    ...mapGetters({
+      getCountInfoAboutTickets: 'getCountInfoAboutTickets'
+    })
+  },
+  unmounted() {
+    this.setIsTimeExpired(false);
+  }
+};
+</script>
+
+<style scoped>
+.checkout-timer {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.timer-description {
+  max-width: 400px;
+}
+
+.step-header-wrap {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.step-header {
+  font-size: 23px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.step-header-description {
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.pay-wrap {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+}
+
+.pay-left-col__film-name {
+  font-size: 27px;
+  margin-bottom: 7px;
+}
+
+.pay-left-col__tags-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.pay-left-col__cinema-address p {
+  color: var(--grey);
+  margin-bottom: 0;
+}
+
+.pay-left-col__session-time {
+  font-size: 17px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed var(--green);
+}
+
+.pay-left-col__order-info {
+  overflow: auto;
+}
+
+.order-info__ticket-item-wrap {
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.pay-left-col__order-info__ticket-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticket-item__seat-info {
+  min-width: 100px;
+}
+
+.ticket-item__dotted-line {
+  width: 100%;
+  margin: 0 4px;
+  border-bottom: 0.5px dashed var(--grey);
+}
+
+.ticket-item__seat-price {
+  text-align: right;
+  min-width: 35px;
+}
+
+.pay-left-col__order-info__total-price {
+  font-weight: 600;
+  font-size: 17px;
+  text-align: right;
+}
+
+.header-expired-wrap {
+  text-align: center;
+}
+
+.btn-checkout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  margin: 15px;
+  background-color: var(--green);
+  color: #fff;
+}
+
+@media (max-width: 460px) {
+  .step-header {
+    font-size: 20px;
+  }
+}
+</style>
