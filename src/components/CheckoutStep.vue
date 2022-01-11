@@ -19,7 +19,12 @@
           <h1 class="pay-left-col__film-name">{{film.nameRu}}</h1>
           <div class="pay-left-col__tags-container">
             <my-tag :text="ageLimits" type="dotted"/>
-            <my-tag :text="session.format" type="green" :is-animated="session.format === '3D'">{{session.format === '3D' ? '3D-очки выдаются перед входом в зал 🕶' : null}}</my-tag>
+            <my-tag :text="session.format"
+                    type="green"
+                    :is-animated="session.format === '3D'"
+                    :popover="true">
+              {{session.format === '3D' ? '3D-очки выдаются перед входом в зал 🕶' : null}}
+            </my-tag>
           </div>
           <chosen-seats-info type="full"></chosen-seats-info>
         </div>

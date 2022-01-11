@@ -3,7 +3,11 @@
     <h1>{{ film.nameRu }}</h1>
     <div class="film-header__tags-container">
       <my-tag :text="ageLimits" type="dotted"/>
-      <my-tag :text="session.format" type="green" :is-animated="session.format === '3D'">3D-очки выдаются перед входом в зал 🕶</my-tag>
+      <my-tag :text="session.format"
+              type="green"
+              :is-animated="session.format === '3D'" :popover="true">
+        3D-очки выдаются перед входом в зал 🕶
+      </my-tag>
     </div>
     <p class="film-header__cinema">{{ session.cinema.name }}, Зал {{ session.hall }}</p>
   </div>

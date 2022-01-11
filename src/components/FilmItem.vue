@@ -15,6 +15,7 @@
         <my-tag
             v-if="film.ratingImdb"
             :text="film.ratingImdb"
+            :popover="true"
             type="green">
           Рейтинг фильма по версии Imdb
         </my-tag>
