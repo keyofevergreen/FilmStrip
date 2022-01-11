@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage";
 import FilmListPage from "../pages/FilmListPage";
 import FilmPage from '../pages/FilmPage';
+import ProfilePage from '../pages/ProfilePage';
+import TicketsHistoryPage from '../pages/TicketsHistoryPage';
 
 const routes = [
   {
@@ -30,6 +32,16 @@ const routes = [
     name: "Cinema Rent",
     component: FilmListPage,
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: ProfilePage
+  },
+  {
+    path: "/profile/history",
+    name: "History",
+    component: TicketsHistoryPage
+  }
 ];
 
 const router = createRouter({
