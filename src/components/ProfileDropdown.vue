@@ -7,16 +7,15 @@
     </n-button>
     <template #overlay>
       <a-menu class="dropdown-menu">
-        <div class="menu-wrap">
+        <div class="menu-wrap dropdown-menu__header">
           Тестовый аккаунт
         </div>
         <a-menu-divider/>
-        <a-menu-item key="0">
-          Личные данные
-        </a-menu-item>
-        <a-menu-item key="1">
-          История
-        </a-menu-item>
+        <router-link :to='ref.value' v-for='ref in refs' :key='ref.value' tag="li">
+          <a-menu-item :key="ref.value">
+            {{ ref.label }}
+          </a-menu-item>
+        </router-link>
         <a-menu-divider/>
         <button key="3" class="menu-wrap btn btn-logout" @click="logout">
           Выход
@@ -34,7 +33,7 @@ import { mapMutations, mapState } from 'vuex';
 import LoginModal from './LoginModal';
 
 export default {
-  name: 'PersonalAccount',
+  name: 'ProfileDropdown',
   components: {
     ProfileIcon,
     LoginModal
@@ -42,7 +41,16 @@ export default {
   data() {
     return {
       visible: false,
-      widthDevice: 0
+      refs: [
+        {
+          value: '/profile',
+          label: 'Личный кабинет',
+        },
+        {
+          value: '/profile/history',
+          label: 'История'
+        }
+      ]
     };
   },
   computed: {
@@ -74,9 +82,12 @@ export default {
   width: 200px;
 }
 
-.menu-wrap {
-  padding: 5px 12px;
+.dropdown-menu__header {
   color: var(--grey);
+}
+
+.menu-wrap {
+  padding: 5px 12px;;
 }
 
 .profile-btn {
@@ -85,11 +96,12 @@ export default {
 }
 
 .profile-btn-before-auth {
-  width: 150px;
+  width: 160px;
   height: 38px;
+  font-size: 20px;
   color: #fff;
   background-color: var(--green);
-  border-radius: 10px;
+  border-radius: 5px;
   transition: background-color .4s;
 }
 
@@ -104,7 +116,8 @@ export default {
 .btn-logout {
   width: 100%;
   font-size: 14px;
-  color: var(--grey);
+  color: var(--red);
+  opacity: 0.8;
   text-align: left;
   transition: background-color 0.3s;
 }
