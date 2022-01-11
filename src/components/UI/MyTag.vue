@@ -1,7 +1,24 @@
 <template>
-  <span class="tag" :class="type ? type : ''">
+  <a-popover v-if="popover">
+    <template #content>
+      <div class="popover-description">
+        <slot></slot>
+      </div>
+    </template>
+    <div
+        class="tag"
+        :class="
+        `${isAnimated ? 'animated' : ''}
+         ${type ? type : ''}`">
+      {{ text }}
+    </div>
+  </a-popover>
+  <div
+      v-else
+      class="tag"
+      :class="`${type ? type : ''}`">
     {{ text }}
-  </span>
+  </div>
 </template>
 
 <script>
@@ -9,10 +26,18 @@ export default {
   name: 'MyTag',
   props: {
     text: {
-      type: [String, Number]
+      type: [String, Number],
+      required: true
     },
     type: {
-      type: String
+      type: String,
+      required: true
+    },
+    isAnimated: {
+      type: Boolean
+    },
+    popover: {
+      type: Boolean
     }
   }
 }
@@ -38,5 +63,36 @@ export default {
 
 .dotted {
   border: 1px dashed var(--pretty-black);
+}
+
+.popover-description {
+  max-width: 400px;
+}
+
+.animated {
+  -moz-animation: cycle 4s linear 3;
+  -webkit-animation: cycle 4s linear 3;
+}
+
+@-moz-keyframes cycle {
+  35% {transform: rotate(0) translate(0, 0);}
+  40% {transform: rotate(5deg) translate(0, -2px);}
+  45% {transform: rotate(-3deg) translate(0, -2px);}
+  50% {transform: rotate(5deg) translate(0, -2px);}
+  55% {transform: rotate(-3deg) translate(0, -2px);}
+  60% {transform: rotate(5deg) translate(0, -2px);}
+  65% {transform: rotate(-3deg) translate(0, -2px);}
+  70% {transform: rotate(0) translate(0, 0);}
+}
+
+@-webkit-keyframes cycle {
+  35% {transform: rotate(0) translate(0, 0);}
+  40% {transform: rotate(5deg) translate(0, -2px);}
+  45% {transform: rotate(-3deg) translate(0, -2px);}
+  50% {transform: rotate(5deg) translate(0, -2px);}
+  55% {transform: rotate(-3deg) translate(0, -2px);}
+  60% {transform: rotate(5deg) translate(0, -2px);}
+  65% {transform: rotate(-3deg) translate(0, -2px);}
+  70% {transform: rotate(0) translate(0, 0);}
 }
 </style>
