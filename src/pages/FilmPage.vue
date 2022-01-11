@@ -4,7 +4,7 @@
     <div class="data-line">
       <span>Расписание на сегодня</span>
     </div>
-    <session-schedule :cinemas="cinemas"></session-schedule>
+    <session-schedule></session-schedule>
   </div>
 </template>
 
@@ -55,7 +55,8 @@ export default {
         })
       }
       const getCorrectYoutubeTrailerUrl = (trailers) => {
-        const trailer = trailers?.items.filter(trailer => trailer.site === 'YOUTUBE' && /(Трейлер)/i.test(trailer.name));
+        const requiredString = /(Трейлер)/i;
+        const trailer = trailers?.items.filter(trailer => trailer.site === 'YOUTUBE' && requiredString.test(trailer.name));
         if (trailer.length) {
           const regex = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)?/;
           const url = trailer[0]?.url;

@@ -7,7 +7,7 @@
             <use :href='href'></use>
           </svg>
         </router-link>
-        <Profile/>
+        <ProfileDropdown/>
       </div>
     </div>
     <my-nav></my-nav>
@@ -16,12 +16,12 @@
 
 <script>
 import logo from '../assets/logo.svg';
-import Profile from './Profile';
+import ProfileDropdown from './ProfileDropdown';
 import MyNav from './MyNav';
 
 export default {
   name: 'my-header',
-  components: { Profile, MyNav },
+  components: { ProfileDropdown, MyNav },
   data() {
     return {
       href: `${logo}#fillStrip-logo`

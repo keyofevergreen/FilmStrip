@@ -11,7 +11,7 @@
           <div class="sessions__container">
             <session-item v-for="session in format.sessions"
                           :key="`${session.time}-${session.hall}-${format.format}`"
-                          :session="{time: session.time, price: session.price, hall: session.hall, format: format.format, cinema: {name: cinema.name, address: cinema.address}}"></session-item>
+                          :session="setSession(cinema, format, session)"></session-item>
           </div>
         </div>
       </div>
@@ -25,19 +25,32 @@
 import SessionItem from './SessionItem';
 import 'ant-design-vue/dist/antd.css';
 import CheckoutModal from './CheckoutModal';
+import { mapState } from 'vuex';
 
 export default {
   name: 'SessionSchedule',
-  props: {
-    cinemas: {
-      type: Object
-    }
-  },
   components: {
     CheckoutModal,
     SessionItem
+  },
+  computed: {
+    ...mapState({
+      cinemas: state => state.cinemas
+    })
+  },
+  methods: {
+    setSession(cinema, format, session) {
+      return {
+        time: session.time,
+        price: session.price,
+        hall: session.hall,
+        hallType: session.hallType,
+        format: format.format,
+        cinema: { name: cinema.name, address: cinema.address }
+      };
+    }
   }
-}
+};
 </script>
 
 <style scoped>

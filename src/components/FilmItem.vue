@@ -12,16 +12,12 @@
         {{ film.countries.map(country => country.country).join(', ') }})</p>
       <div class="film-item__tags">
         <my-tag :text="ageLimits" type="dotted"></my-tag>
-        <a-popover>
-          <template #content>
-            Рейтинг фильма по версии {{film.ratingImdb ? 'Imdb' : 'Кинопоиска'}}
-          </template>
-          <my-tag
-              v-if="film.ratingImdb || film.ratingKinopoisk"
-              :text="film.ratingImdb || film.ratingKinopoisk"
-              type="green">
-          </my-tag>
-        </a-popover>
+        <my-tag
+            v-if="film.ratingImdb"
+            :text="film.ratingImdb"
+            type="green">
+          Рейтинг фильма по версии Imdb
+        </my-tag>
       </div>
       <p class="film-item__genres">{{ film.genres.length > 1 ? 'Жанры: ' : 'Жанр: ' }}
         {{ film.genres.map(genre => genre.genre).join(', ') }}</p>

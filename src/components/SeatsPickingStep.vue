@@ -2,8 +2,8 @@
   <div class="film-header">
     <h1>{{ film.nameRu }}</h1>
     <div class="film-header__tags-container">
-      <my-tag :text="ageLimits" type="dotted"></my-tag>
-      <my-tag :text="session.format" type="green"></my-tag>
+      <my-tag :text="ageLimits" type="dotted"/>
+      <my-tag :text="session.format" type="green" :is-animated="session.format === '3D'">3D-очки выдаются перед входом в зал 🕶</my-tag>
     </div>
     <p class="film-header__cinema">{{ session.cinema.name }}, Зал {{ session.hall }}</p>
   </div>
@@ -22,7 +22,7 @@
     </li>
   </ul>
   <div class="overflow-wrapper">
-    <seats-picker :hall="hall"/>
+    <seats-picker/>
   </div>
 </template>
 
@@ -40,87 +40,6 @@ export default {
       ageLimits: state => state.ageLimitsOfSelectedFilm,
       session: state => state.selectedSession
     })
-  },
-  data() {
-    return {
-      hall: [
-        {
-          row: 1,
-          seats: [
-            { seat: 1, isOccupied: false },
-            { seat: 2, isOccupied: false },
-            { seat: 3, isOccupied: true },
-            { seat: 4, isOccupied: true },
-            { seat: 5, isOccupied: false },
-            { seat: 6, isOccupied: false },
-            { seat: 7, isOccupied: false },
-            { seat: 8, isOccupied: false },
-            { seat: 9, isOccupied: false },
-            { seat: 10, isOccupied: false }
-          ]
-        },
-        {
-          row: 2,
-          seats: [
-            { seat: 1, isOccupied: false },
-            { seat: 2, isOccupied: false },
-            { seat: 3, isOccupied: false },
-            { seat: 4, isOccupied: false },
-            { seat: 5, isOccupied: false },
-            { seat: 6, isOccupied: false },
-            { seat: 7, isOccupied: false },
-            { seat: 8, isOccupied: false },
-            { seat: 9, isOccupied: false },
-            { seat: 10, isOccupied: false }
-          ]
-        },
-        {
-          row: 3,
-          seats: [
-            { seat: 1, isOccupied: false },
-            { seat: 2, isOccupied: false },
-            { seat: 3, isOccupied: false },
-            { seat: 4, isOccupied: true },
-            { seat: 5, isOccupied: true },
-            { seat: 6, isOccupied: true },
-            { seat: 7, isOccupied: false },
-            { seat: 8, isOccupied: false },
-            { seat: 9, isOccupied: false },
-            { seat: 10, isOccupied: false }
-          ]
-        },
-        {
-          row: 4,
-          seats: [
-            { seat: 1, isOccupied: false },
-            { seat: 2, isOccupied: false },
-            { seat: 3, isOccupied: false },
-            { seat: 4, isOccupied: false },
-            { seat: 5, isOccupied: false },
-            { seat: 6, isOccupied: true },
-            { seat: 7, isOccupied: true },
-            { seat: 8, isOccupied: false },
-            { seat: 9, isOccupied: false },
-            { seat: 10, isOccupied: false }
-          ]
-        },
-        {
-          row: 5,
-          seats: [
-            { seat: 1, isOccupied: false },
-            { seat: 2, isOccupied: false },
-            { seat: 3, isOccupied: true },
-            { seat: 4, isOccupied: false },
-            { seat: 5, isOccupied: true },
-            { seat: 6, isOccupied: true },
-            { seat: 7, isOccupied: false },
-            { seat: 8, isOccupied: false },
-            { seat: 9, isOccupied: false },
-            { seat: 10, isOccupied: false }
-          ]
-        }
-      ]
-    };
   }
 };
 </script>

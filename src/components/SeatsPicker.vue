@@ -3,16 +3,32 @@
     <div class="screen">Экран</div>
     <div class="seats-wrap">
       <div class="row-numbers">
-        <div class='row-numbers__item' v-for="row in hall" :key="row">{{ row.row }}</div>
+        <div class='row-numbers__item'
+             v-for="row in setTypeHall"
+             :key="row">
+          {{ row.row }}
+        </div>
       </div>
       <div class="seats">
-        <div class="row" v-for="row in hall" :key="row">
-          <seat class='seat' v-for="seat in row.seats" :key="`${row.row}-${seat.seat}`" :row="row.row"
-                :seatInRow="seat.seat" :isOccupied="seat.isOccupied"></seat>
+        <div v-for="row in setTypeHall"
+             :key="row"
+             class="row"
+             :class="this.session.hallType"
+        >
+          <seat v-for="seat in row.seats"
+                :key="`${row.row}-${seat.seat}`"
+                :row="row.row"
+                :seatInRow="seat.seat"
+                :isOccupied="seat.isOccupied"
+                :peopleCapacity="seat.peopleCapacity"/>
         </div>
       </div>
       <div class="row-numbers">
-        <div class='row-numbers__item' v-for="row in hall" :key="row">{{ row.row }}</div>
+        <div class='row-numbers__item'
+             v-for="row in setTypeHall"
+             :key="row">
+          {{ row.row }}
+        </div>
       </div>
     </div>
   </div>
@@ -20,14 +36,21 @@
 
 <script>
 import Seat from './Seat';
+import { mapState } from 'vuex';
 
 export default {
   name: 'SeatsPicker',
   components: { Seat },
-  props: {
-    hall: {
-      type: Object
-    },
+  computed: {
+    ...mapState({
+      session: state => state.selectedSession,
+      halls: state => state.halls
+    }),
+    setTypeHall() {
+      const currentHallTypeOfSession = this.session.hallType;
+      console.log(currentHallTypeOfSession, this.halls.find(hall => hall.hallType === currentHallTypeOfSession).layout)
+      return this.halls.find(hall => hall.hallType === currentHallTypeOfSession).layout;
+    }
   },
 };
 </script>
@@ -81,52 +104,23 @@ export default {
 
 .row {
   display: flex;
+  justify-content: center;
   gap: 5px;
 }
 
-.seat {
-  width: 35px;
-  height: 26px;
-  border: 1px solid var(--green);
-  border-top-left-radius: 13px;
-  border-top-right-radius: 13px;
-  transition: transform 0.4s;
-}
-
-.seat:nth-of-type(2) {
+.standart .seat:nth-of-type(2) {
   margin-right: 12px;
 }
 
-.seat:nth-last-of-type(2) {
+.standart .seat:nth-last-of-type(2) {
   margin-left: 12px;
 }
 
-.seat.selected {
-  font-family: 'Poiret One', cursive;
-  color: #fff;
-  background-color: var(--green);
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.vip .seat:nth-of-type(2) {
+  margin-right: 18px;
 }
 
-.seat.occupied {
-  border: none;
-  background-color: var(--light-grey);
-}
-
-.seat:not(.selected, .occupied).locked {
-  opacity: 0.2;
-}
-
-.seat:not(.occupied):hover {
-  cursor: pointer;
-  transform: scale(1.2);
-}
-
-.seat:not(.selected).locked:hover {
-  cursor: default;
-  transform: scale(1);
+.vip {
+  gap: 10px;
 }
 </style>

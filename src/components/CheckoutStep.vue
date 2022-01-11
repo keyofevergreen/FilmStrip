@@ -1,12 +1,12 @@
 <template>
   <a-popover>
     <template #content>
-      <div class="timer-description">
+      <div class="popover-description">
         <p>На время оплаты {{ tickets.length > 1 ? 'Ваши билеты забронированы, чтобы их могли' : 'Ваш билет забронирован, чтобы его могли' }} купить только Вы.</p>
         <p>Но если Вы не произведете оплату по окончанию таймера, бронь с {{ tickets.length > 1 ? 'билетов' : 'билета' }} будет снята 😥</p>
       </div>
     </template>
-    <my-timer v-if="!isTimeExpired" :duration="900" :callback="setExpiredCallback" class="checkout-timer"></my-timer>
+    <my-timer v-if="!isTimeExpired" :duration="900" :callback="setExpiredCallback" class="checkout-timer"/>
   </a-popover>
   <div v-if="isTimeExpired === false" class="checkout-step-content">
     <div class="step-header-wrap">
@@ -18,14 +18,13 @@
         <div class="pay-left-col">
           <h1 class="pay-left-col__film-name">{{film.nameRu}}</h1>
           <div class="pay-left-col__tags-container">
-            <my-tag :text="ageLimits" type="dotted"></my-tag>
-            <my-tag :text="session.format" type="green"></my-tag>
+            <my-tag :text="ageLimits" type="dotted"/>
+            <my-tag :text="session.format" type="green" :is-animated="session.format === '3D'">{{session.format === '3D' ? '3D-очки выдаются перед входом в зал 🕶' : null}}</my-tag>
           </div>
           <chosen-seats-info type="full"></chosen-seats-info>
         </div>
       </div>
-      <div>
-        <button class="btn btn-checkout">Оплатить жопой</button>
+      <div class="pay-right-col">
       </div>
     </div>
     </div>
@@ -42,7 +41,7 @@ import ChosenSeatsInfo from './ChosenSeatsInfo';
 
 export default {
   name: 'CheckoutStep',
-  components: { MyTimer, MyTag, ChosenSeatsInfo },
+  components: { MyTimer, MyTag, ChosenSeatsInfo},
   data() {
     return {};
   },
@@ -78,10 +77,6 @@ export default {
 .checkout-timer {
   width: 100px;
   margin-bottom: 10px;
-}
-
-.timer-description {
-  max-width: 400px;
 }
 
 .step-header-wrap {
@@ -120,18 +115,6 @@ export default {
 
 .header-expired-wrap {
   text-align: center;
-}
-
-.btn-checkout {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  margin: 15px;
-  background-color: var(--green);
-  color: #fff;
 }
 
 @media (max-width: 460px) {

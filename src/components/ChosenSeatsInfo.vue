@@ -140,7 +140,7 @@ a:hover {
 }
 
 .ticket-item__seat-info {
-  min-width: 100px;
+  min-width: 110px;
 }
 
 .ticket-item__dotted-line {

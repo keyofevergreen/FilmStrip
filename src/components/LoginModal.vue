@@ -85,7 +85,7 @@ export default {
   width: 100%;
   min-height: 45px;
   border: 1px solid var(--green);
-  border-radius: 10px;
+  border-radius: 5px;
   transition: border 0.4s;
 }
 
