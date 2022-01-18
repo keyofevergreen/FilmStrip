@@ -1,21 +1,33 @@
 <template>
-  <form class="payment-form" id="payment-form" @submit.prevent>
-      <div>
-        <fieldset form="payment-form" class="payment-form__fieldset-wrap">
-          <legend>1. Данные для получения заказа</legend>
-          <a-input class="payment-form__input"
+  <form class="payment-form" id="payment-form" @submit.prevent novalidate>
+    <div>
+      <fieldset form="payment-form" class="payment-form__fieldset-wrap">
+        <legend>1. Данные для получения заказа</legend>
+        <label>
+          <a-input class="input payment-form__input"
                    v-model:value="form.userMail"
+                   @blur="v$.form.userMail.$touch"
                    type="email"
                    placeholder="Введите вашу почту"
-                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           />
-          <a-input class="payment-form__input"
+          <p v-if="v$.form.userMail.$error" class="error-message">
+            {{ userMailErrors }}
+          </p>
+        </label>
+        <label>
+          <a-input class="input payment-form__input"
                    v-model:value="form.userPhoneNumber"
+                   @blur="v$.form.userPhoneNumber.$touch"
                    type="tel"
                    placeholder="Введите ваш номер телефона"/>
-        </fieldset>
-        <fieldset form="payment-form" class="payment-form__fieldset-wrap">
-          <legend>2. Способ оплаты</legend>
+          <p v-if="v$.form.userPhoneNumber.$error" class="error-message">
+            {{ userPhoneNumberErrors }}
+          </p>
+        </label>
+      </fieldset>
+      <fieldset form="payment-form" class="payment-form__fieldset-wrap">
+        <legend>2. Способ оплаты</legend>
+        <label>
           <a-radio-group class="payment-form__checkout-type" v-model:value="form.paymentMethod">
             <a-radio-button value="Банковская карта">
               Банковская карта
@@ -27,19 +39,32 @@
               В кассе кинотеатра перед сеансом
             </a-radio-button>
           </a-radio-group>
-        </fieldset>
-      </div>
+          <p v-if="v$.form.paymentMethod.$error" class="error-message">
+            {{ paymentMethodErrors }}
+          </p>
+        </label>
+      </fieldset>
+    </div>
     <a-spin :spinning="isFetching">
-      <a-button type="primary" class="btn btn-submit" @click="handleSuccess">Оплатить {{ tickets.length * session.price }}₽</a-button>
+      <a-button type="primary" class="btn btn-submit" @click="handleSuccess">Оплатить {{
+          tickets.length * session.price
+        }}₽
+      </a-button>
     </a-spin>
   </form>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex';
+import useVuelidate from '@vuelidate/core';
+import { email, required } from '@vuelidate/validators';
+import { hasValidPhoneNumber } from '../../functions/validators';
 
 export default {
   name: 'PaymentForm',
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       isFetching: false,
@@ -47,14 +72,37 @@ export default {
         userMail: '',
         userPhoneNumber: '',
         paymentMethod: '',
+      },
+    };
+  },
+  validations() {
+    return {
+      form: {
+        userMail: { required, email },
+        userPhoneNumber: { required, hasValidPhoneNumber },
+        paymentMethod: { required },
       }
-    }
+    };
   },
   computed: {
-    ...mapState ({
+    ...mapState({
       tickets: state => state.selectedTickets,
       session: state => state.selectedSession,
-    })
+    }),
+    userMailErrors() {
+      if (this.v$.form.userMail.required.$invalid) return '* Обязательно для заполнения.';
+      if (this.v$.form.userMail.email.$invalid) return '* Неправильный формат почты.';
+      return null;
+    },
+    userPhoneNumberErrors() {
+      if (this.v$.form.userPhoneNumber.required.$invalid) return '* Обязательно для заполнения.';
+      if (this.v$.form.userPhoneNumber.hasValidPhoneNumber) return '* Неправильный формат номера.';
+      return null;
+    },
+    paymentMethodErrors() {
+      if (this.v$.form.paymentMethod.required.$invalid) return '* Выберете способ оплаты.';
+      return null;
+    }
   },
   methods: {
     ...mapMutations({
@@ -65,17 +113,18 @@ export default {
       this.isFetching = bool;
     },
     handleSuccess() {
+      this.v$.$touch();
       this.setFetching(true);
-      try {
-        setTimeout(() => {
-          this.setCheckoutModalVisible(false)
-          console.log(this.form);
-          this.setFetching(false);
-        }, 500);
-      } catch (e) {
-        console.error(e);
+      console.log(this.authAccount);
+      if (!this.v$.$invalid) {
+          setTimeout(() => {
+            this.setCheckoutModalVisible(false);
+            console.log(this.form);
+            this.setFetching(false);
+          }, 500);
+      } else {
+        this.setFetching(false);
       }
-
     }
   }
 };
@@ -94,14 +143,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 25px;
-}
-
-legend {
-  font-size: 17px;
-}
-
-.payment-form__input {
-  border-radius: 5px;
 }
 
 .payment-form__checkout-type {
