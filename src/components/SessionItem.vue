@@ -1,6 +1,12 @@
 <template>
   <div class="session-item">
-    <a-button class="session-item__time" :disabled="isDisabled" :class='isDisabled ? "disabled" : ""' @click="setSession(session)">{{ session.time }}</a-button>
+    <a-button
+        class="btn session-item__btn"
+        :disabled="isDisabled"
+        :class='isDisabled ? "disabled" : "available"'
+        @click="setSession(session)">
+      {{ session.time }}
+    </a-button>
     <span class="session-item__price">{{ session.price }} ₽</span>
   </div>
 </template>
@@ -18,10 +24,9 @@ export default {
   },
   data() {
     return {
-      realTime : moment().unix(),
       interval: null,
       isDisabled: moment(this.session.time, 'hh:mm') < moment(),
-    }
+    };
   },
   methods: {
     ...mapMutations({
@@ -35,25 +40,25 @@ export default {
     startTimer() {
       this.interval = setInterval(this.isSessionStarter, 1000);
     },
-    stopTimer() {
-      clearInterval(this.interval);
-    },
     isSessionStarter() {
-      if(moment(this.session.time, 'HH:mm').unix() < moment().unix()) {
+      if (moment(this.session.time, 'hh:mm') < moment()) {
         this.isDisabled = true;
         this.stopTimer();
       } else {
-        this.realTime = moment().unix();
+        this.isDisabled = false;
       }
     },
+    stopTimer() {
+      clearInterval(this.interval);
+    },
   },
-  mounted() {
+  beforeMount() {
     this.startTimer();
   },
   unmounted() {
     this.stopTimer();
   }
-}
+};
 </script>
 
 <style scoped>
@@ -62,22 +67,25 @@ export default {
   height: 50px;
 }
 
-.session-item__time {
+.session-item__btn {
   width: 80px;
   height: 30px;
-  border: 1px solid var(--green);
-  border-radius: 5px;
 
   font-size: 14px;
-  color: var(--pretty-black);
-  background-color: #fff;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  border: 1px solid var(--green);
+  border-radius: 5px;
   cursor: pointer;
   transition: transform .5s, background-color .5s;
+}
+
+.available {
+  background-color: #fff;
+  color: var(--pretty-black);
 }
 
 .session-item__price {
@@ -88,9 +96,13 @@ export default {
   font-weight: 300;
 }
 
-.session-item__time:not(.disabled):hover {
+.session-item__btn:not(.disabled):hover {
   transform: scale(1.1);
   color: #fff;
   background-color: var(--green);
+}
+
+.ant-btn:focus {
+  color: var(--pretty-black);
 }
 </style>
