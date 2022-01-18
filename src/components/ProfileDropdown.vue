@@ -1,14 +1,15 @@
 <template>
-  <a-dropdown v-if="isAuth" :trigger="['click']" placement='bottomRight' :overlayClassName="isMobile ? 'mobile' : ''">
+  <a-dropdown v-if="authAccount" :trigger="['click']" placement='bottomRight'>
     <n-button class="profile-btn profile-btn-after-auth" @click="e => e.preventDefault()" text>
+      <!--      UI from Naive library-->
       <n-icon>
         <profile-icon/>
       </n-icon>
     </n-button>
     <template #overlay>
       <a-menu class="dropdown-menu">
-        <div class="menu-wrap dropdown-menu__header">
-          Тестовый аккаунт
+        <div class="menu-item-wrap dropdown-menu__header">
+          {{authAccount.mail}}
         </div>
         <a-menu-divider/>
         <router-link :to='ref.value' v-for='ref in refs' :key='ref.value' tag="li">
@@ -17,30 +18,30 @@
           </a-menu-item>
         </router-link>
         <a-menu-divider/>
-        <button key="3" class="menu-wrap btn btn-logout" @click="logout">
+        <button :key="refs.length" class="menu-item-wrap btn btn-logout" @click="logout">
           Выход
         </button>
       </a-menu>
     </template>
   </a-dropdown>
-  <button v-else class="btn profile-btn profile-btn-before-auth" @click="setModalVisible(true)">Вход</button>
-  <login-modal></login-modal>
+  <button v-else class="btn btn-green profile-btn profile-btn-before-auth" @click="setModalVisible(true)">Вход</button>
+  <auth-modal></auth-modal>
 </template>
 
 <script>
 import { UserCircle as ProfileIcon } from '@vicons/fa';
 import { mapMutations, mapState } from 'vuex';
-import LoginModal from './LoginModal';
+import AuthModal from './AuthModal/AuthModal';
 
 export default {
   name: 'ProfileDropdown',
   components: {
     ProfileIcon,
-    LoginModal
+    AuthModal
   },
   data() {
     return {
-      visible: false,
+      isModalVisible: false,
       refs: [
         {
           value: '/profile',
@@ -55,22 +56,23 @@ export default {
   },
   computed: {
     ...mapState({
-      isAuth: state => state.isAuth
+      authAccount: state => state.authAccount
     })
   },
   methods: {
     ...mapMutations({
-      setLoginModalVisible: 'setLoginModalVisible',
-      setAuth: 'setAuth'
+      setAuthModalVisible: 'setAuthModalVisible',
+      clearAuthAccount: 'clearAuthAccount'
     }),
     hide() {
-      this.visible = false;
+      this.isModalVisible = false;
     },
     setModalVisible(bool) {
-      this.setLoginModalVisible(bool);
+      this.setAuthModalVisible(bool);
     },
     logout() {
-      this.setAuth(false);
+      this.clearAuthAccount();
+      delete localStorage.authUser;
     }
   }
 };
@@ -86,7 +88,7 @@ export default {
   color: var(--grey);
 }
 
-.menu-wrap {
+.menu-item-wrap {
   padding: 5px 12px;;
 }
 
@@ -99,14 +101,6 @@ export default {
   width: 160px;
   height: 38px;
   font-size: 20px;
-  color: #fff;
-  background-color: var(--green);
-  border-radius: 5px;
-  transition: background-color .4s;
-}
-
-.profile-btn-before-auth:hover {
-  background-color: var(--light-green);
 }
 
 .profile-btn-after-auth {
@@ -115,10 +109,11 @@ export default {
 
 .btn-logout {
   width: 100%;
+  text-align: left;
   font-size: 14px;
   color: var(--red);
   opacity: 0.8;
-  text-align: left;
+  border-radius: 0;
   transition: background-color 0.3s;
 }
 
