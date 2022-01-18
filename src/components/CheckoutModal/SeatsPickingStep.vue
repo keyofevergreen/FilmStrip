@@ -32,7 +32,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import MyTag from './UI/MyTag';
+import MyTag from '../UI/MyTag';
 import SeatsPicker from './SeatsPicker';
 
 export default {

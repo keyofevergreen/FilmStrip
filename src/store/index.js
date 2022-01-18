@@ -20,9 +20,9 @@ export default createStore({
     selectedReleaseSort: 'released',
     selectedGenresSort: '',
     checkoutModalVisible: false,
-    loginModalVisible: false,
+    authModalVisible: false,
     isTimeExpired: false,
-    isAuth: false,
+    authAccount: localStorage.authUser ? JSON.parse(localStorage.authUser) : null,
     cinemas: [
       {
         name: 'Кронверк Вью МЕГА JS',
@@ -419,8 +419,8 @@ export default createStore({
     setCheckoutModalVisible(state, bool) {
       state.checkoutModalVisible = bool;
     },
-    setLoginModalVisible(state, bool) {
-      state.loginModalVisible = bool;
+    setAuthModalVisible(state, bool) {
+      state.authModalVisible = bool;
     },
     setSelectedSession(state, session) {
       state.selectedSession = session;
@@ -437,9 +437,12 @@ export default createStore({
     setIsTimeExpired(state, bool) {
       state.isTimeExpired = bool;
     },
-    setAuth(state, bool) {
-      state.isAuth = bool;
-    }
+    setAuthAccount(state, account) {
+      state.authAccount = account;
+    },
+    clearAuthAccount(state) {
+      state.authAccount = null;
+    },
   },
   actions: {
     async fetchFilms({ commit }) {

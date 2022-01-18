@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import FilmList from '../components/FilmList';
-import SortByGenres from '../components/SortByGenres';
+import FilmList from '../FilmList';
+import SortByGenres from '../SortByGenres';
 
 export default {
   name: 'FilmListPage',

@@ -1,9 +1,9 @@
 <template>
   <div class="release-sort">
-    <div @click="setSort('released')" class='btn' :class='isReleasedFilms === "released" ? "active" : "inactive"'>
+    <div @click="setSort('released')" class='btn btn-release' :class='isReleasedFilms === "released" ? "active" : "inactive"'>
       <span>Сегодня в кино</span>
     </div>
-    <div @click="setSort('unreleased')" class='btn' :class='isReleasedFilms === "unreleased" ? "active" : "inactive"'>
+    <div @click="setSort('unreleased')" class='btn btn-release' :class='isReleasedFilms === "unreleased" ? "active" : "inactive"'>
       <span>Скоро в кино</span>
     </div>
   </div>
@@ -31,9 +31,11 @@ export default {
 <style scoped>
 .release-sort {
   max-width: 444px;
+  font-size: 20px;
   display: flex;
   gap: 20px;
   margin: 38px auto 25px;
+  transition: transform 0.5s, color 0.3s;
 }
 
 .release-sort div {
@@ -71,6 +73,10 @@ export default {
 @media (max-width: 487px) {
   .release-sort {
     padding: 0 20px;
+  }
+
+  .btn-release {
+    font-size: 18px;
   }
 }
 </style>

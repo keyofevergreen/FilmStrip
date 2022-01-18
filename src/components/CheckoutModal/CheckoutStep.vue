@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import MyTimer from './UI/MyTimer';
+import MyTimer from '../UI/MyTimer';
 import { mapGetters, mapMutations, mapState } from 'vuex';
 import ChosenSeatsInfo from './ChosenSeatsInfo';
 import PaymentForm from './PaymentForm';
@@ -70,6 +70,14 @@ export default {
 .checkout-timer {
   width: 100px;
   margin-bottom: 10px;
+}
+
+.popover-description {
+  max-width: 400px;
+}
+
+.popover-description p {
+  margin-bottom: 5px;
 }
 
 .step-header-wrap {

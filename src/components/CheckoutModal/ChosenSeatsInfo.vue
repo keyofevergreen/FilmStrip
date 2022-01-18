@@ -54,7 +54,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from 'vuex';
-import MyTag from './UI/MyTag';
+import MyTag from '../UI/MyTag';
 
 export default {
   name: 'ChosenSeatsInfo',

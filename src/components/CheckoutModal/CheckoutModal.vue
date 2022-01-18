@@ -2,32 +2,32 @@
   <a-modal v-model:visible="isVisible" width="980px" :centered="true" :footer="null"
            wrapClassName="modal" :afterClose="handleCancel">
     <div class="modal-wrap">
-      <a-steps :current="current" class="modal__steps" v-if="!this.isTimeExpired">
+      <a-steps :current="currentModalPage" class="modal__steps" v-if="!this.isTimeExpired">
         <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
       </a-steps>
       <!--    First step -->
-      <div v-if="current === 0" class="step-content">
+      <div v-if="currentModalPage === 0" class="step-content">
         <warning-step></warning-step>
       </div>
       <!--    Second step -->
-      <div v-if="current === 1" class="step-content">
+      <div v-if="currentModalPage === 1" class="step-content">
         <seats-picking-step></seats-picking-step>
       </div>
       <!--    Last step -->
-      <div v-if="current === 2" class="step-content">
+      <div v-if="currentModalPage === 2" class="step-content">
         <checkout-step></checkout-step>
       </div>
     </div>
 
     <div class="steps-action" :class="this.isTimeExpired ? 'centered' : ''">
-      <a-button v-if="current > 1 && !isTimeExpired" style="margin-left: 8px" @click="prev">
+      <a-button v-if="currentModalPage > 1 && !isTimeExpired" style="margin-left: 8px" @click="prev">
         Назад
       </a-button>
-      <a-button v-if="current === 0" type="primary" @click="next">
+      <a-button v-if="currentModalPage === 0" type="primary" @click="next">
         Продолжить
       </a-button>
-      <chosen-seats-info v-if="current === 1 && tickets.length > 0" type="crop"></chosen-seats-info>
-      <a-button v-if="current === 1" type="primary" @click="next"
+      <chosen-seats-info v-if="currentModalPage === 1 && tickets.length > 0" type="crop"></chosen-seats-info>
+      <a-button v-if="currentModalPage === 1" type="primary" @click="next"
                 :disabled="isDisabled">
         Перейти к оплате
       </a-button>
@@ -39,7 +39,7 @@
 <!--        Оплатить {{ tickets.length * session.price }}₽-->
 <!--      </a-button>-->
       <a-button
-          v-if="current == steps.length - 1 && this.isTimeExpired"
+          v-if="currentModalPage == steps.length - 1 && this.isTimeExpired"
           type="primary"
           @click="handleCancel">
         Вернуться к расписанию сеансов
@@ -60,7 +60,7 @@ export default {
   components: { WarningStep, SeatsPickingStep, CheckoutStep, ChosenSeatsInfo },
   data() {
     return {
-      current: 0,
+      currentModalPage: 0,
       isVisible: false,
       isDisabled: true,
       steps: [
@@ -96,16 +96,16 @@ export default {
       this.setCheckoutModalVisible(false);
     },
     next() {
-      this.current++;
+      this.currentModalPage++;
     },
     prev() {
-      this.current--;
+      this.currentModalPage--;
     }
   },
   watch: {
     checkoutModalVisible(newValue) {
       if(newValue === false) {
-        this.current = 0;
+        this.currentModalPage = 0;
         this.clearTickets();
       }
       this.isVisible = (newValue);

@@ -24,7 +24,7 @@
 <script>
 import SessionItem from './SessionItem';
 import 'ant-design-vue/dist/antd.css';
-import CheckoutModal from './CheckoutModal';
+import CheckoutModal from './CheckoutModal/CheckoutModal';
 import { mapState } from 'vuex';
 
 export default {

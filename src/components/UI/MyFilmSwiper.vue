@@ -125,7 +125,7 @@ export default {
 
 @media (max-width: 411px) {
   .swiper {
-    padding: 0 50px;
+    padding: 0 85px;
   }
 }
 </style>

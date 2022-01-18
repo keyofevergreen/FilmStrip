@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import FilmstripSwiper from "../components/FilmstripSwiper";
-import FilmList from '../components/FilmList';
+import FilmstripSwiper from "../FilmstripSwiper";
+import FilmList from '../FilmList';
 
 export default {
   name: "HomePage",
