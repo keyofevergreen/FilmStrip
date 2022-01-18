@@ -1,12 +1,10 @@
 <template>
   <div class="container">
-    <n-select
-        v-model:value="selectedValues"
-        filterable
-        max-tag-count="responsive"
-        :placeholder="'Сортировка по жанрам'"
-        :options="options"
-    />
+    <a-select :default-value="null" v-model:value="selectedValues">
+      <a-select-option v-for="option in options" :key="option.value" :value="option.value">
+        {{option.label}}
+      </a-select-option>
+    </a-select>
   </div>
 </template>
 
@@ -46,7 +44,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
   gap: 20px;
-
+  padding: 0 20px;
   margin: 0 auto;
 }
 
