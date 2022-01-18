@@ -18,6 +18,9 @@ export default {
   },
   mounted() {
     this.setFetchedFilms();
+    if(!localStorage.getItem("users")) {
+      localStorage.setItem("users", JSON.stringify([]));
+    }
   }
 }
 </script>
@@ -64,11 +67,36 @@ h1, h2, h3, h4 {
 }
 
 .btn {
-  font-size: 20px;
   font-family: 'Inter', sans-serif;
   background-color: transparent;
   border: 0;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.input {
+  border-radius: 5px;
+}
+
+label {
+  position: relative;
+}
+
+.error-message {
+  position: absolute;
+  font-size: 12px;
+  color: var(--red);
+  opacity: 0.8;
+}
+
+.btn-green {
+  color: #fff;
+  background-color: var(--green);
+  transition: 0.4s background-color;
+}
+
+.btn-green:hover {
+  background-color: var(--light-green);
 }
 
 @media (max-width: 1140px) {
