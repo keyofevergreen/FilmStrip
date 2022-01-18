@@ -9,7 +9,7 @@
     </film-list-item>
   </div>
   <div v-else class="film-list-crop">
-    <my-film-swiper :filmList="films"/>
+    <my-film-swiper :filmList="isFetching ? fetchingFilms : films"/>
   </div>
 </template>
 
@@ -30,10 +30,16 @@ export default {
     MyFilmSwiper,
     FilmListItem,
   },
+  data() {
+    return {
+      fetchingFilms: ['fetchingFilm', 'fetchingFilm', 'fetchingFilm' ,'fetchingFilm']
+    }
+  },
   computed: {
     ...mapState({
       isReleasedFilms: state => state.selectedReleaseSort,
-      selectedGenreSort: state => state.selectedGenreSort
+      selectedGenreSort: state => state.selectedGenreSort,
+      isFetching: state => state.isFetchingFilms
     }),
     ...mapGetters({
       films: 'filmsAfterSorts',

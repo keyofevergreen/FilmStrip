@@ -1,19 +1,21 @@
 <template>
-  <div v-if="!isFetching">
-    <div class="film-list__item-card" @click="$router.push(`/films/${film.kinopoiskId}`)">
-      <div class="item-card__premiere">
-        {{ setPremiere(film.premiereRu) }}
+  <div @click="$router.push(`/films/${film.kinopoiskId}`)">
+    <div v-if="!isFetching">
+      <div class="film-list__item-card">
+        <div class="item-card__premiere">
+          {{ setPremiere(film.premiereRu) }}
+        </div>
+        <img :src="film.posterUrlPreview" :alt="film.nameRu" class="item-card__poster">
       </div>
-      <img :src="film.posterUrlPreview" :alt="film.nameRu" class="item-card__poster">
+      <div class="film-list__item-genres">
+        {{film.genres.map(genre => genre.genre).join(', ')}}
+      </div>
+      <h4 class="film-list__item-name">{{ film.nameRu }}</h4>
     </div>
-    <div class="film-list__item-genres">
-      {{film.genres.map(genre => genre.genre).join(', ')}}
+    <div v-else class="film-list__item-fetching">
+      <div class="item-fetching__premiere">Loading</div>
+      <div class="item-fetching__poster"></div>
     </div>
-    <h4 class="film-list__item-name">{{ film.nameRu }}</h4>
-  </div>
-  <div v-else class="film-list__item-fetching">
-    <div class="item-fetching__premiere">Loading</div>
-    <div class="item-fetching__poster"></div>
   </div>
 </template>
 
@@ -121,6 +123,7 @@ export default {
   -o-background-size: 100% 100%;
   background-size: 100% 100%;
 }
+
 .film-list__item-card:hover .item-card__premiere {
   transition: background-color .5s;
   background-color: var(--light-green);
