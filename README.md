@@ -5,7 +5,7 @@ Features:
 - Movie lists with the ability to filter by genre.
 - Page with a description of the selected movie and a schedule of screenings.
 - Modal window with a choice of seats and payment.
-- Authorization (account data is stored in LocalStorage)
+- Authorization (account data is stored in LocalStorage).
 - Personal account with ticket history. 
 
 In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://momentjs.com/), [ant-design-vue](https://www.antdv.com/docs/vue/introduce/) and [vuelidate](https://vuelidate-next.netlify.app/).
