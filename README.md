@@ -1,16 +1,18 @@
 # 📽 FilmStrip
 
-Hello! This is my first Vue 3 app.\
+Hello! This is my first pet project on Vue3.\
 Features:
 - Movie lists with the ability to filter by genre.
 - Page with a description of the selected movie and a schedule of screenings.
 - Modal window with a choice of seats and payment.
+- Authorization (account data is stored in LocalStorage)
 - Personal account with ticket history. 
 
-In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://momentjs.com/) and [ant-design-vue](https://www.antdv.com/docs/vue/introduce/).
+In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://momentjs.com/), [ant-design-vue](https://www.antdv.com/docs/vue/introduce/) and [vuelidate](https://vuelidate-next.netlify.app/).
 
 
 ### 🐱‍🏍If you want to see a demo go [here](https://keyofevergreen.github.io/FilmStrip/)!
+### Note that this is a demo of an unfinished project, so it still has flaws
 
 ## How to use
 
