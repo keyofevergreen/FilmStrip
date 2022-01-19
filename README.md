@@ -1,3 +1,5 @@
+![FilmStrip](https://github.com/keyofevergreen/FilmStrip/blob/main/public/filmstrip.gif)
+
 # 📽 FilmStrip
 
 Hello! This is my first pet project on Vue3.\
