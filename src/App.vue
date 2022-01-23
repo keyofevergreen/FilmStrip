@@ -2,6 +2,7 @@
   <my-header></my-header>
   <router-view class="wrap content">
   </router-view>
+  <a-back-top class="btn-back-top"/>
 </template>
 
 <script>
@@ -13,7 +14,7 @@ export default {
   components: { MyHeader },
   methods: {
     ...mapActions({
-      setFetchedFilms: 'fetchFilms'
+      setFetchedFilms: 'films/fetchFilms'
     })
   },
   mounted() {
@@ -29,15 +30,15 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&display=swap');
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :root {
   --green: #4fc08d;
   --light-green: #51eda7;
-  --pretty-black: #333333;
+  --pretty-black: #333;
   --light-grey: #f6f6f6;
   --grey: #999da5;
   --dark-grey: #4f5959;
@@ -46,9 +47,9 @@ export default {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
   min-width: 365px;
   color: var(--pretty-black);
+  font-family: 'Inter', sans-serif;
 }
 
 h1, h2, h3, h4 {
@@ -84,8 +85,8 @@ label {
 
 .error-message {
   position: absolute;
-  font-size: 12px;
   color: var(--red);
+  font-size: 12px;
   opacity: 0.8;
 }
 
@@ -97,6 +98,17 @@ label {
 
 .btn-green:hover {
   background-color: var(--light-green);
+}
+
+.page-header {
+  font-weight: 400;
+  font-size: 35px;
+  text-align: center;
+}
+
+.btn-back-top .ant-back-top-content{
+  color: #fff;
+  background-color: var(--green);
 }
 
 @media (max-width: 1140px) {
