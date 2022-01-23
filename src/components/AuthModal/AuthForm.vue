@@ -6,7 +6,6 @@
                @blur="v$.form.userMail.$touch"
                type="email"
                placeholder="Введите вашу почту"
-               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       />
       <p v-if="v$.form.userMail.$error" class="error-message">
         {{ userMailErrors }}
@@ -15,7 +14,6 @@
     <label>
       <a-input class="input"
                v-model:value="form.userPassword"
-               @blur="v$.form.userPassword.$touch"
                type="password"
                placeholder="Введите ваш пароль"
       />
@@ -33,7 +31,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core';
-import { email, required } from '@vuelidate/validators';
+import { email, required, sameAs } from '@vuelidate/validators';
 import { mapMutations, mapState } from 'vuex';
 import { hasRegisteredMail } from '../../functions/validators';
 
@@ -43,7 +41,9 @@ export default {
     return { v$: useVuelidate() };
   },
   data() {
+    const users = JSON.parse(localStorage.users);
     return {
+      users,
       isFetching: false,
       form: {
         userMail: '',
@@ -54,15 +54,26 @@ export default {
   validations() {
     return {
       form: {
-        userMail: { required, email, hasRegisteredMail },
-        userPassword: { required },
+        userMail: {
+          required,
+          email,
+          hasRegisteredMail
+        },
+        userPassword: {
+          required,
+          sameAs: this.searchedAccount ? sameAs(this.searchedAccount.password) : '',
+          $lazy:true
+        },
       }
     };
   },
   computed: {
     ...mapState({
-      authModalVisible: state => state.authModalVisible
+      authModalVisible: state => state.auth.authModalVisible
     }),
+    searchedAccount() {
+      return this.users.find(user => user.mail === this.form.userMail);
+    },
     userMailErrors() {
       if (this.v$.form.userMail.required.$invalid) return '* Обязательно для заполнения.';
       if (this.v$.form.userMail.email.$invalid) return '* Неправильный формат почты.';
@@ -71,6 +82,7 @@ export default {
     },
     userPasswordErrors() {
       if (this.v$.form.userPassword.required.$invalid) return '* Обязательно для заполнения.';
+      if (this.v$.form.userPassword.sameAs.$invalid) return '* Неправильный пароль.';
       return null;
     },
   },
@@ -82,26 +94,17 @@ export default {
     setFetching(bool) {
       this.isFetching = bool;
     },
-    validate() {
-      const users = JSON.parse(localStorage.users);
-      const user = users.find(user => user.mail === this.form.userMail);
-      if (user) {
-        this.setAuthModalVisible(false);
-        this.setAuthAccount({ mail: user.mail, phoneNumber: user.phoneNumber });
-        localStorage.setItem('authUser', JSON.stringify({ mail: user.mail, phoneNumber: user.phoneNumber, ticketsHistory: user.ticketHistory }));
-      }
-    },
     handleSuccess() {
       this.v$.$touch();
       this.setFetching(true);
       if (!this.v$.$invalid) {
         setTimeout(() => {
-          this.validate()
+          this.setAuthModalVisible(false);
+          this.setAuthAccount(this.searchedAccount);
           this.setFetching(false);
         }, 1000);
       } else {
         this.setFetching(false);
-        this.form.userPassword = '';
       }
     },
   },
