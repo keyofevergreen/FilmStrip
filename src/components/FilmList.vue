@@ -39,10 +39,10 @@ export default {
     ...mapState({
       isReleasedFilms: state => state.selectedReleaseSort,
       selectedGenreSort: state => state.selectedGenreSort,
-      isFetching: state => state.isFetchingFilms
+      isFetching: state => state.films.isFetchingFilms
     }),
     ...mapGetters({
-      films: 'filmsAfterSorts',
+      films: 'films/filmsAfterSorts',
     }),
   }
 }
@@ -51,8 +51,8 @@ export default {
 <style scoped>
 .film-list-full {
   display: grid;
-  gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
 }
 
 @media (max-width: 440px) {

@@ -42,16 +42,16 @@ export default {
   },
   computed: {
     ...mapState({
-      tickets: state => state.selectedTickets
+      tickets: state => state.selectedFilm.selectedTickets
     }),
     ...mapGetters({
-      isLimit: 'isLimitOfTickets'
+      isLimit: 'selectedFilm/isLimitOfTickets'
     })
   },
   methods: {
     ...mapMutations({
-      setTicket: 'setTicket',
-      removeTicket: 'removeTicket'
+      setTicket: 'selectedFilm/setTicket',
+      removeTicket: 'selectedFilm/removeTicket'
     }),
     contains(tickets, id) {
       return tickets.find((ticket) => ticket.id === id);
@@ -93,18 +93,18 @@ export default {
 }
 
 .seat.selected {
-  font-family: 'Poiret One', cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
+  font-family: 'Poiret One', cursive;
   background-color: var(--green);
   border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .seat.occupied {
-  border: none;
   background-color: var(--light-grey);
+  border: none;
 }
 
 .seat:not(.selected, .occupied).locked {
@@ -112,13 +112,13 @@ export default {
 }
 
 .seat:not(.occupied):hover {
-  cursor: pointer;
   transform: scale(1.2);
+  cursor: pointer;
 }
 
 .seat:not(.selected).locked:hover {
-  cursor: default;
   transform: scale(1);
+  cursor: default;
 }
 
 @media (max-width: 850px) {

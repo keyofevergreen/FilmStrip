@@ -81,20 +81,20 @@ export default {
 }
 
 .film-list__dashed-card a {
-  text-decoration: none;
   color: var(--pretty-black);
+  text-decoration: none;
 }
 
 .dashed-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   font-size: 18px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
 }
 
 .dashed-card__content svg {
@@ -102,8 +102,8 @@ export default {
 }
 
 .film-list__dashed-card:hover {
-  fill: var(--green);
   border-color: var(--green);
+  fill: var(--green);
 }
 
 .film-list__dashed-card:hover a {

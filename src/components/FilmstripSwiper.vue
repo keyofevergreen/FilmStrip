@@ -30,26 +30,25 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue';
 import 'swiper/swiper-bundle.css';
-import { mapGetters } from 'vuex'
 
 import SwiperCore, { Autoplay, Navigation } from 'swiper';
 import FilmstripItem from './FilmstripItem';
+import { mapGetters } from 'vuex';
 
 SwiperCore.use([Autoplay, Navigation]);
 
 export default {
+  name: 'FilmstripSwiper',
   components: {
     Swiper,
     SwiperSlide,
     FilmstripItem
   },
-  methods: {},
   computed: {
     ...mapGetters({
-      currentPremiers: 'currentPremiers'
+      currentPremiers: 'films/currentPremiers'
     }),
-  },
-  name: 'FilmstripSwiper'
+  }
 }
 </script>
 
@@ -60,18 +59,13 @@ export default {
 }
 
 .swiper-slide {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  -webkit-justify-content: center;
+  align-items: center;
   justify-content: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
 }
 
 @media (max-width: 420px) {

@@ -1,9 +1,9 @@
 <template>
   <div class="release-sort">
-    <div @click="setSort('released')" class='btn btn-release' :class='isReleasedFilms === "released" ? "active" : "inactive"'>
+    <div @click="setSort('released')" class='btn btn-sort-release' :class='isReleasedFilms === "released" ? "active" : "inactive"'>
       <span>Сегодня в кино</span>
     </div>
-    <div @click="setSort('unreleased')" class='btn btn-release' :class='isReleasedFilms === "unreleased" ? "active" : "inactive"'>
+    <div @click="setSort('unreleased')" class='btn btn-sort-release' :class='isReleasedFilms === "unreleased" ? "active" : "inactive"'>
       <span>Скоро в кино</span>
     </div>
   </div>
@@ -30,20 +30,21 @@ export default {
 
 <style scoped>
 .release-sort {
-  max-width: 444px;
-  font-size: 20px;
   display: flex;
   gap: 20px;
+  max-width: 444px;
   margin: 38px auto 25px;
+  font-size: 20px;
   transition: transform 0.5s, color 0.3s;
 }
 
-.release-sort div {
+.btn-sort-release {
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 40px;
   color: var(--pretty-black);
-  display: flex;
-  justify-content: center;
+  border-radius: 0;
 }
 
 .active {
@@ -60,8 +61,8 @@ export default {
 }
 
 .inactive:hover {
-  transform: scale(1.1);
   color: var(--green);
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {

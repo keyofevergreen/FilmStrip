@@ -11,15 +11,6 @@ import FilmList from '../FilmList';
 
 export default {
   name: "HomePage",
-  components: { FilmstripSwiper, FilmList },
-  data() {
-    return {
-      films: []
-    }
-  }
+  components: { FilmstripSwiper, FilmList }
 }
 </script>
-
-<style scoped>
-
-</style>

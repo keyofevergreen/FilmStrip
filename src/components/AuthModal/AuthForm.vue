@@ -1,21 +1,23 @@
 <template>
   <form class="form-wrap" @submit.prevent novalidate>
     <label>
-      <a-input class="input"
-               v-model:value="form.userMail"
-               @blur="v$.form.userMail.$touch"
-               type="email"
-               placeholder="Введите вашу почту"
+      <a-input
+          class="input"
+          v-model:value="form.userMail"
+          @blur="v$.form.userMail.$touch"
+          type="email"
+          placeholder="Введите вашу почту"
       />
       <p v-if="v$.form.userMail.$error" class="error-message">
         {{ userMailErrors }}
       </p>
     </label>
     <label>
-      <a-input class="input"
-               v-model:value="form.userPassword"
-               type="password"
-               placeholder="Введите ваш пароль"
+      <a-input
+          class="input"
+          v-model:value="form.userPassword"
+          type="password"
+          placeholder="Введите ваш пароль"
       />
       <p v-if="v$.form.userPassword.$error" class="error-message">
         {{ userPasswordErrors }}
@@ -48,7 +50,7 @@ export default {
       form: {
         userMail: '',
         userPassword: '',
-      }
+      },
     };
   },
   validations() {
@@ -57,39 +59,46 @@ export default {
         userMail: {
           required,
           email,
-          hasRegisteredMail
+          hasRegisteredMail,
         },
         userPassword: {
           required,
-          sameAs: this.searchedAccount ? sameAs(this.searchedAccount.password) : '',
-          $lazy:true
+          sameAs: this.searchedAccount
+              ? sameAs(this.searchedAccount.password)
+              : '',
+          $lazy: true,
         },
-      }
+      },
     };
   },
   computed: {
     ...mapState({
-      authModalVisible: state => state.auth.authModalVisible
+      authModalVisible: (state) => state.auth.authModalVisible,
     }),
     searchedAccount() {
-      return this.users.find(user => user.mail === this.form.userMail);
+      return this.users.find((user) => user.mail === this.form.userMail);
     },
     userMailErrors() {
-      if (this.v$.form.userMail.required.$invalid) return '* Обязательно для заполнения.';
-      if (this.v$.form.userMail.email.$invalid) return '* Неправильный формат почты.';
-      if (this.v$.form.userMail.hasRegisteredMail.$invalid) return '* Аккаунта с такой почтой не существует.';
+      if (this.v$.form.userMail.required.$invalid)
+        return '* Обязательно для заполнения.';
+      if (this.v$.form.userMail.email.$invalid)
+        return '* Неправильный формат почты.';
+      if (this.v$.form.userMail.hasRegisteredMail.$invalid)
+        return '* Аккаунта с такой почтой не существует.';
       return null;
     },
     userPasswordErrors() {
-      if (this.v$.form.userPassword.required.$invalid) return '* Обязательно для заполнения.';
-      if (this.v$.form.userPassword.sameAs.$invalid) return '* Неправильный пароль.';
+      if (this.v$.form.userPassword.required.$invalid)
+        return '* Обязательно для заполнения.';
+      if (this.v$.form.userPassword.sameAs.$invalid)
+        return '* Неправильный пароль.';
       return null;
     },
   },
   methods: {
     ...mapMutations({
       setAuthModalVisible: 'setAuthModalVisible',
-      setAuthAccount: 'setAuthAccount'
+      setAuthAccount: 'setAuthAccount',
     }),
     setFetching(bool) {
       this.isFetching = bool;
@@ -115,8 +124,8 @@ export default {
         this.form.userMail = '';
         this.form.userPassword = '';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

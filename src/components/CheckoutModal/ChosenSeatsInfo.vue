@@ -72,18 +72,18 @@ export default {
   },
   computed: {
     ...mapState({
-      tickets: state => state.selectedTickets,
-      session: state => state.selectedSession,
-      film: state => state.selectedFilm,
-      ageLimits: state => state.ageLimitsOfSelectedFilm
+      tickets: state => state.selectedFilm.selectedTickets,
+      session: state => state.selectedFilm.selectedSession,
+      film: state => state.selectedFilm.film,
+      ageLimits: state => state.selectedFilm.ageLimits
     }),
     ...mapGetters({
-      getCountInfoAboutTickets: 'getCountInfoAboutTickets'
+      getCountInfoAboutTickets: 'selectedFilm/getCountInfoAboutTickets'
     })
   },
   methods: {
     ...mapMutations({
-      removeTicket: 'removeTicket'
+      removeTicket: 'selectedFilm/removeTicket'
     }),
     hide() {
       this.visible = false;
@@ -106,15 +106,15 @@ a:hover {
 .seats-info {
   display: flex;
   gap: 30px;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .delete-button {
   width: 20px;
   height: 20px;
-  fill: var(--green);
   transition: fill 0.4s;
+  fill: var(--green);
 }
 
 .delete-button:hover {
@@ -123,14 +123,14 @@ a:hover {
 }
 
 .film-name {
-  font-size: 27px;
   margin-bottom: 7px;
+  font-size: 27px;
 }
 
 .tags-container {
   display: flex;
-  align-items: center;
   gap: 15px;
+  align-items: center;
   margin-bottom: 10px;
 }
 
@@ -139,13 +139,13 @@ a:hover {
 }
 
 .cinema-address p {
-  color: var(--grey);
   margin-bottom: 0;
+  color: var(--grey);
 }
 
 .session-time {
-  font-size: 22px;
   padding-bottom: 10px;
+  font-size: 22px;
   border-bottom: 2px dashed var(--green);
 }
 
@@ -154,15 +154,15 @@ a:hover {
 }
 
 .order-info__ticket-item-wrap {
-  padding-bottom: 25px;
   margin-bottom: 4px;
+  padding-bottom: 25px;
   border-bottom: 1px solid var(--light-grey);
 }
 
 .order-info__ticket-item {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .ticket-item__seat-info {
@@ -176,8 +176,8 @@ a:hover {
 }
 
 .ticket-item__seat-price {
-  text-align: right;
   white-space: nowrap;
+  text-align: right;
 }
 
 .order-info__total-price {

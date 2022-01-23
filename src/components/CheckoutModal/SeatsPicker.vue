@@ -20,13 +20,6 @@
             {{ row.row }}
           </div>
       </div>
-<!--      <div class="row-numbers">-->
-<!--        <div class='row-numbers__item'-->
-<!--             v-for="row in setTypeHall"-->
-<!--             :key="row">-->
-<!--          {{ row.row }}-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
   </div>
 </template>
@@ -40,8 +33,8 @@ export default {
   components: { Seat },
   computed: {
     ...mapState({
-      session: state => state.selectedSession,
-      halls: state => state.halls
+      session: state => state.selectedFilm.selectedSession,
+      halls: state => state.cinemaSession.halls
     }),
     setTypeHall() {
       const currentHallTypeOfSession = this.session.hallType;
@@ -55,8 +48,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
 .screen {
-  height: 20px;
   width: 100%;
+  height: 20px;
   margin-bottom: 45px;
   color: #fff;
   text-align: center;
@@ -64,20 +57,20 @@ export default {
 }
 
 .container {
-  width: 700px;
-  margin: 40px auto 10px auto;
   display: flex;
   flex-direction: column;
   gap: 13px;
   align-items: center;
+  width: 700px;
+  margin: 40px auto 10px;
 }
 
 .row-number {
-  height: 26px;
-  font-size: 15px;
-  color: var(--dark-grey);
   display: flex;
   align-items: center;
+  height: 26px;
+  color: var(--dark-grey);
+  font-size: 15px;
 }
 
 .seats {
@@ -89,9 +82,9 @@ export default {
 
 .row {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 5px;
+  align-items: center;
+  justify-content: center;
 }
 
 .row-number:nth-of-type(1),

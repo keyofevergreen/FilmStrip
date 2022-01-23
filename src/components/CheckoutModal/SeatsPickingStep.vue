@@ -2,14 +2,19 @@
   <div class="film-header">
     <h1>{{ film.nameRu }}</h1>
     <div class="film-header__tags-container">
-      <my-tag :text="ageLimits" type="dotted"/>
-      <my-tag :text="session.format"
-              type="green"
-              :is-animated="session.format === '3D'" :popover="session.format === '3D'">
+      <my-tag :text="ageLimits" type="dotted" />
+      <my-tag
+        :text="session.format"
+        type="green"
+        :is-animated="session.format === '3D'"
+        :popover="session.format === '3D'"
+      >
         3D-очки выдаются перед входом в зал 🕶
       </my-tag>
     </div>
-    <p class="film-header__cinema">{{ session.cinema.name }}, Зал {{ session.hall }}</p>
+    <p class="film-header__cinema">
+      {{ session.cinema.name }}, Зал {{ session.hall }}
+    </p>
   </div>
   <ul class="showcase">
     <li>
@@ -26,25 +31,25 @@
     </li>
   </ul>
   <div class="overflow-wrapper">
-    <seats-picker/>
+    <seats-picker />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import MyTag from '../UI/MyTag';
-import SeatsPicker from './SeatsPicker';
+import { mapState } from "vuex";
+import MyTag from "../UI/MyTag";
+import SeatsPicker from "./SeatsPicker";
 
 export default {
-  name: 'SeatsPickingStep',
+  name: "SeatsPickingStep",
   components: { SeatsPicker, MyTag },
   computed: {
     ...mapState({
-      film: state => state.selectedFilm,
-      ageLimits: state => state.ageLimitsOfSelectedFilm,
-      session: state => state.selectedSession
-    })
-  }
+      film: (state) => state.selectedFilm.film,
+      ageLimits: (state) => state.selectedFilm.ageLimits,
+      session: (state) => state.selectedFilm.selectedSession,
+    }),
+  },
 };
 </script>
 
@@ -65,28 +70,28 @@ export default {
 
 .film-header__tags-container {
   display: flex;
-  align-items: center;
   gap: 15px;
+  align-items: center;
 }
 
 .film-header__cinema {
-  font-size: 16px;
-  color: var(--grey);
   margin-top: 10px;
+  color: var(--grey);
+  font-size: 16px;
 }
 
 .showcase {
   display: flex;
-  justify-content: center;
   gap: 20px;
+  justify-content: center;
   color: var(--grey);
   list-style-type: none;
 }
 
 .showcase li {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin: 0 10px;
 }
 
@@ -104,41 +109,42 @@ export default {
 }
 
 .seat.selected {
-  font-family: 'Poiret One', cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
+  font-family: "Poiret One", cursive;
   background-color: var(--green);
   border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .seat.occupied {
-  border: none;
   background-color: var(--light-grey);
+  border: none;
 }
+
 
 .showcase .seat:not(.occupied):hover,
 .seat:not(.selected).locked:hover {
-  cursor: default;
   transform: scale(1);
+  cursor: default;
 }
 
 @media (max-width: 850px) {
   .overflow-wrapper {
-    overflow: visible;
     position: relative;
+    overflow: visible;
   }
 
   .overflow-wrapper::before {
     position: absolute;
-    content: '';
-    display: inline-block;
-    border-left: 1px dashed var(--grey);
-    text-align: center;
-    top:20px;
+    top: 20px;
     left: 50%;
+    display: inline-block;
     height: 100%;
+    text-align: center;
+    border-left: 1px dashed var(--grey);
+    content: "";
   }
 }
 

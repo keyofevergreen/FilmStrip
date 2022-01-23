@@ -58,8 +58,8 @@ export default {
 
 <style scoped>
 .timer {
-  font-size: 20px;
   color: var(--pretty-black);
+  font-size: 20px;
   transition: color 30s;
 }
 

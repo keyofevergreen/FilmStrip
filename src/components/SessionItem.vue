@@ -30,8 +30,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setCheckoutModalVisible: 'setCheckoutModalVisible',
-      setSelectedSession: 'setSelectedSession'
+      setCheckoutModalVisible: 'selectedFilm/setCheckoutModalVisible',
+      setSelectedSession: 'selectedFilm/setSelectedSession'
     }),
     setSession(session) {
       this.setCheckoutModalVisible(true);
@@ -68,15 +68,12 @@ export default {
 }
 
 .session-item__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 80px;
   height: 30px;
-
   font-size: 14px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   border: 1px solid var(--green);
   border-radius: 5px;
   cursor: pointer;
@@ -84,22 +81,22 @@ export default {
 }
 
 .available {
-  background-color: #fff;
   color: var(--pretty-black);
+  background-color: #fff;
 }
 
 .session-item__price {
   position: absolute;
   top: 31px;
   left: 5px;
-  font-size: 11px;
   font-weight: 300;
+  font-size: 11px;
 }
 
 .session-item__btn:not(.disabled):hover {
-  transform: scale(1.1);
   color: #fff;
   background-color: var(--green);
+  transform: scale(1.1);
 }
 
 .ant-btn:focus {

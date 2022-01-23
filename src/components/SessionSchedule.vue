@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState({
-      cinemas: state => state.cinemas
+      cinemas: state => state.cinemaSession.cinema
     })
   },
   methods: {
@@ -60,8 +60,8 @@ export default {
 
 .session-schedule__item {
   display: grid;
-  gap: 50px;
   grid-template-columns: 1fr 2fr;
+  gap: 50px;
 }
 
 .place {
@@ -69,15 +69,15 @@ export default {
 }
 
 .header {
-  font-size: 20px;
-  font-weight: 600;
   margin-bottom: 7px;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .place__address {
   max-width: 340px;
-  font-size: 17px;
   color: var(--grey);
+  font-size: 17px;
 }
 
 .sessions {
@@ -90,7 +90,7 @@ export default {
 
 .sessions__container {
   display: grid;
-  gap: 15px;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 15px;
 }
 </style>

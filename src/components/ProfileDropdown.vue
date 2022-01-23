@@ -1,15 +1,15 @@
 <template>
   <a-dropdown v-if="authAccount" :trigger="['click']" placement='bottomRight'>
-    <n-button class="profile-btn profile-btn-after-auth" @click="e => e.preventDefault()" text>
+    <n-button class="profile-btn profile-btn-after-auth" text>
       <!--      UI from Naive library-->
       <n-icon>
         <profile-icon/>
       </n-icon>
     </n-button>
     <template #overlay>
-      <a-menu class="dropdown-menu">
+      <a-menu class="dropdown-menu" style="max-width: 250px">
         <div class="menu-item-wrap dropdown-menu__header">
-          {{authAccount.mail}}
+          {{ authAccount.mail }}
         </div>
         <a-menu-divider/>
         <router-link :to='ref.value' v-for='ref in refs' :key='ref.value' tag="li">
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
-      authAccount: state => state.authAccount
+      authAccount: state => state.auth.authAccount
     })
   },
   methods: {
@@ -79,13 +79,12 @@ export default {
 </script>
 
 <style scoped>
-.dropdown-menu {
-  margin-right: 30px;
-  width: 200px;
-}
 
 .dropdown-menu__header {
+  padding-right: 5px;
+  overflow: hidden;
   color: var(--grey);
+  text-overflow: ellipsis;
 }
 
 .menu-item-wrap {
@@ -109,11 +108,11 @@ export default {
 
 .btn-logout {
   width: 100%;
-  text-align: left;
-  font-size: 14px;
   color: var(--red);
-  opacity: 0.8;
+  font-size: 14px;
+  text-align: left;
   border-radius: 0;
+  opacity: 0.8;
   transition: background-color 0.3s;
 }
 
@@ -128,8 +127,8 @@ export default {
   }
 
   .profile-btn-after-auth {
-    font-size: 35px;
     margin-right: 20px;
+    font-size: 35px;
   }
 }
 </style>

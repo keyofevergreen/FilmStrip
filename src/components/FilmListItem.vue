@@ -1,9 +1,9 @@
 <template>
-  <div @click="$router.push(`/films/${film.kinopoiskId}`)">
+  <div @click="linkToFilmPage">
     <div v-if="!isFetching">
       <div class="film-list__item-card">
         <div class="item-card__premiere">
-          {{ setPremiere(film.premiereRu) }}
+          {{ setRelease(film.premiereRu) }}
         </div>
         <img :src="film.posterUrlPreview" :alt="film.nameRu" class="item-card__poster">
       </div>
@@ -29,7 +29,7 @@ export default {
     film: Object,
   },
   methods: {
-    setPremiere(date) {
+    setRelease(date) {
       const currentDate = moment();
       const filmPremiere = moment(date, 'YYYY-MM-DD');
       const diff = Number(currentDate.diff(filmPremiere, 'days', true));
@@ -47,11 +47,15 @@ export default {
           sameElse: '[В кино с] DD.MM'
         });
       }
+    },
+    linkToFilmPage() {
+      this.$router.push(`/films/${this.film.kinopoiskId}`)
+      moment(this.film.premiereRu, 'YYYY-MM-DD')
     }
   },
   computed: {
     ...mapState({
-      isFetching: state => state.isFetchingFilms
+      isFetching: state => state.films.isFetchingFilms
     })
   }
 }
@@ -65,14 +69,13 @@ export default {
 }
 
 .item-card__premiere {
-  height: 32px;
-  font-size: 20px;
-  color: #fff;
-  background-color: var(--green);
-
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 32px;
+  color: #fff;
+  font-size: 20px;
+  background-color: var(--green);
 }
 
 .item-card__poster {
@@ -85,16 +88,16 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--grey);
   margin-bottom: 10px;
+  color: var(--grey);
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .film-list__item-name {
-  font-size: 18px;
-  font-weight: 500;
   color: var(--pretty-black);
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .film-list__item-fetching {
@@ -103,30 +106,26 @@ export default {
 }
 
 .item-fetching__premiere {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 32px;
   font-size: 20px;
   border-bottom: 4px dashed var(--pretty-black);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .item-fetching__poster {
   width: 100%;
   height: 100%;
   background-image: url(../assets/chaplin.svg);
-  background-position: center center;
   background-repeat: no-repeat;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  -o-background-size: 100% 100%;
+  background-position: center center;
   background-size: 100% 100%;
 }
 
 .film-list__item-card:hover .item-card__premiere {
-  transition: background-color .5s;
   background-color: var(--light-green);
+  transition: background-color .5s;
 }
 
 </style>

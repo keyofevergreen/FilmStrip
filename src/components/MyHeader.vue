@@ -4,7 +4,7 @@
       <div class="wrap logo-line">
         <router-link to="/">
           <svg xmlns="http://www.w3.org/2000/svg" class="logo-line__logo">
-            <use :href='href'></use>
+            <use :href='`${logo}#fillStrip-logo`'></use>
           </svg>
         </router-link>
         <ProfileDropdown/>
@@ -31,7 +31,7 @@ export default {
   components: { ProfileDropdown },
   data() {
     return {
-      href: `${logo}#fillStrip-logo`,
+      logo,
       refs: [
         {
           value: '/online-cinema',
@@ -57,7 +57,7 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 200;
+  z-index: 980;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -65,21 +65,21 @@ export default {
 
 
 .logo-line-wrap {
+  z-index: 100;
   width: 100%;
   height: 68px;
-  z-index: 100;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 6%);
 }
 
 .logo-line__logo {
-  height: 68px;
   width: 236px;
+  height: 68px;
 }
 
 .logo-line {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo-line a {
@@ -88,8 +88,8 @@ export default {
 
 .menu-line {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 57px;
   font-size: 20px;
   background-color: var(--light-grey);
@@ -98,15 +98,15 @@ export default {
 
 .menu-line__nav {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .menu-line__nav button {
   width: auto;
   height: 50px;
-  padding-left: 32px;
   padding-right: 32px;
+  padding-left: 32px;
   color: var(--dark-grey);
   transition: transform .5s;
 }
@@ -123,14 +123,14 @@ export default {
 
 @media (max-width: 736px) {
   .menu-line__nav li {
+    padding-right: 32px;
     padding-left: 15px;
-    padding-right: 15px;
   }
 
   .menu-line__nav button {
-    font-size: 18px;
-    padding-left: 15px;
     padding-right: 15px;
+    padding-left: 15px;
+    font-size: 18px;
   }
 }
 
@@ -149,8 +149,8 @@ export default {
   }
 
   .logo-line__logo {
-    height: 58px;
     width: 200px;
+    height: 58px;
   }
 
   .menu-line {

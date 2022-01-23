@@ -45,15 +45,15 @@ export default {
 
 <style scoped>
 .tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
   height: 27px;
   padding: 0 10px;
-  width: 60px;
-  font-size: 17px;
   font-weight: 300;
+  font-size: 17px;
   border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .green {
@@ -70,11 +70,10 @@ export default {
 }
 
 .animated {
-  -moz-animation: cycle 4s linear 3;
-  -webkit-animation: cycle 4s linear 3;
+  animation: cycle 4s linear 3;
 }
 
-@-moz-keyframes cycle {
+@keyframes cycle {
   35% {transform: rotate(0) translate(0, 0);}
   40% {transform: rotate(5deg) translate(0, -2px);}
   45% {transform: rotate(-3deg) translate(0, -2px);}
@@ -85,7 +84,7 @@ export default {
   70% {transform: rotate(0) translate(0, 0);}
 }
 
-@-webkit-keyframes cycle {
+@keyframes cycle {
   35% {transform: rotate(0) translate(0, 0);}
   40% {transform: rotate(5deg) translate(0, -2px);}
   45% {transform: rotate(-3deg) translate(0, -2px);}

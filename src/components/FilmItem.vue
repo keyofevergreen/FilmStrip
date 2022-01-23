@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
-      ageLimits: state => state.ageLimitsOfSelectedFilm
+      ageLimits: state => state.selectedFilm.ageLimits
     })
   },
   methods: {
@@ -95,11 +95,11 @@ export default {
 .film-item__header {
   font-size: 30px;
 }
-
 .film-item__country {
-  color: var(--grey);
   margin-bottom: 15px;
+  color: var(--grey);
 }
+
 
 .film-item__genres {
   margin-bottom: 5px;
