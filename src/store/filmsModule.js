@@ -6,7 +6,7 @@ const NEXT_MONTH = moment().add(1, 'months');
 // Need to get films in three months: past, present and next
 const MONTHS = [LAST_MONTH, CURRENT_DATE, NEXT_MONTH];
 
-export const fetchedFilmsModule = {
+export const filmsModule = {
   state: () => ({
     films: [],
     releasedFilms: [],

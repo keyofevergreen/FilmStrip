@@ -1,6 +1,6 @@
-export const cinemasSessionsInfoModule = {
+export const cinemaSessionInfoModule = {
   state: () => ({
-    cinemas: [
+    cinema: [
       {
         name: 'Кронверк Вью МЕГА JS',
         address: 'площадь Приведения Типов 13, корпус 3, «МЕГА JS», NaN-й этаж',
