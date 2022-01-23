@@ -8,11 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.0-alpha.33",
+    "@vuelidate/validators": "^2.0.0-alpha.26",
     "ant-design-vue": "3.0.0-beta.7",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
+    "qrcode.vue": "^3.3.3",
+    "stylelint-config-recommended-vue": "^1.1.0",
     "swiper": "^7.3.0",
     "vue": "^3.2.26",
     "vue-router": "^4.0.0-0",
@@ -34,7 +38,15 @@
     "less": "^4.1.2",
     "less-loader": "7.3.0",
     "naive-ui": "^2.21.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-airbnb": "0.0.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-prettier": "^2.0.0",
+    "stylelint-scss": "^4.1.0"
   },
   "eslintConfig": {
     "root": true,
