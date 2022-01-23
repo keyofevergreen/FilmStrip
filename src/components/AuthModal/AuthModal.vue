@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     ...mapState({
-      authModalVisible: state => state.authModalVisible,
+      authModalVisible: state => state.auth.authModalVisible,
     }),
   },
   methods: {
@@ -62,12 +62,12 @@ export default {
 
 <style scoped>
 .modal .ant-modal .ant-modal-content {
-  padding: 25px 10px 0 10px;
+  padding: 25px 10px 0;
 }
 
 .auth-header {
-  font-weight: 400;
   color: var(--grey);
+  font-weight: 400;
 }
 
 .registration-link-wrap {
@@ -75,8 +75,8 @@ export default {
 }
 
 .auth-header-registration-link {
-  font-size: 19px;
   color: var(--green);
+  font-size: 19px;
   transition: color 0.4s;
 }
 

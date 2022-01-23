@@ -1,8 +1,18 @@
 <template>
-  <a-modal v-model:visible="isVisible" width="980px" :centered="true" :footer="null"
-           wrapClassName="modal" :afterClose="handleCancel">
+  <a-modal
+      v-model:visible="isVisible"
+      width="980px"
+      :centered="true"
+      :footer="null"
+      wrapClassName="modal"
+      :afterClose="handleCancel"
+  >
     <div class="modal-wrap">
-      <a-steps :current="currentModalPage" class="modal__steps" v-if="!this.isTimeExpired">
+      <a-steps
+          :current="currentModalPage"
+          class="modal__steps"
+          v-if="!this.isTimeExpired"
+      >
         <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
       </a-steps>
       <!--    First step -->
@@ -20,28 +30,40 @@
     </div>
 
     <div class="steps-action" :class="this.isTimeExpired ? 'centered' : ''">
-      <a-button v-if="currentModalPage > 1 && !isTimeExpired" style="margin-left: 8px" @click="prev">
+      <a-button
+          v-if="currentModalPage > 1 && !isTimeExpired"
+          style="margin-left: 8px"
+          @click="prev"
+      >
         Назад
       </a-button>
       <a-button v-if="currentModalPage === 0" type="primary" @click="next">
         Продолжить
       </a-button>
-      <chosen-seats-info v-if="currentModalPage === 1 && tickets.length > 0" type="crop"></chosen-seats-info>
-      <a-button v-if="currentModalPage === 1" type="primary" @click="next"
-                :disabled="isDisabled">
+      <chosen-seats-info
+          v-if="currentModalPage === 1 && tickets.length > 0"
+          type="crop"
+      ></chosen-seats-info>
+      <a-button
+          v-if="currentModalPage === 1"
+          type="primary"
+          @click="next"
+          :disabled="isDisabled"
+      >
         Перейти к оплате
       </a-button>
-<!--      <a-button-->
-<!--          v-if="current == steps.length - 1 && !this.isTimeExpired"-->
-<!--          type="primary"-->
-<!--          @click="handleSuccess"-->
-<!--      >-->
-<!--        Оплатить {{ tickets.length * session.price }}₽-->
-<!--      </a-button>-->
+      <!--      <a-button-->
+      <!--          v-if="current == steps.length - 1 && !this.isTimeExpired"-->
+      <!--          type="primary"-->
+      <!--          @click="handleSuccess"-->
+      <!--      >-->
+      <!--        Оплатить {{ tickets.length * session.price }}₽-->
+      <!--      </a-button>-->
       <a-button
           v-if="currentModalPage == steps.length - 1 && this.isTimeExpired"
           type="primary"
-          @click="handleCancel">
+          @click="handleCancel"
+      >
         Вернуться к расписанию сеансов
       </a-button>
     </div>
@@ -73,21 +95,21 @@ export default {
         {
           title: 'Оплатите билеты',
         },
-      ]
+      ],
     };
   },
   computed: {
     ...mapState({
-      checkoutModalVisible: state => state.checkoutModalVisible,
-      tickets: state => state.selectedTickets,
-      session: state => state.selectedSession,
-      isTimeExpired: state => state.isTimeExpired
-    })
+      checkoutModalVisible: (state) => state.selectedFilm.checkoutModalVisible,
+      tickets: (state) => state.selectedFilm.selectedTickets,
+      session: (state) => state.selectedFilm.selectedSession,
+      isTimeExpired: (state) => state.isTimeExpired,
+    }),
   },
   methods: {
     ...mapMutations({
-      setCheckoutModalVisible: 'setCheckoutModalVisible',
-      clearTickets: 'clearTickets'
+      setCheckoutModalVisible: 'selectedFilm/setCheckoutModalVisible',
+      clearTickets: 'selectedFilm/clearTickets',
     }),
     handleCancel() {
       this.setCheckoutModalVisible(false);
@@ -100,32 +122,32 @@ export default {
     },
     prev() {
       this.currentModalPage--;
-    }
+    },
   },
   watch: {
     checkoutModalVisible(newValue) {
-      if(newValue === false) {
+      if (newValue === false) {
         this.currentModalPage = 0;
         this.clearTickets();
       }
-      this.isVisible = (newValue);
+      this.isVisible = newValue;
     },
     tickets(newValue) {
       this.isDisabled = !newValue.length;
-    }
+    },
   },
   beforeMount() {
     if (this.isVisible === true) {
       this.isVisible = false;
       this.setCheckoutModalVisible(false);
     }
-  }
+  },
 };
 </script>
 
 <style>
 .modal-wrap {
-  padding: 35px 30px 0 30px;
+  padding: 35px 30px 0;
 }
 
 .step-content {
@@ -134,10 +156,10 @@ export default {
 }
 
 .steps-action {
-  padding-right: 30px;
   display: flex;
-  justify-content: flex-end;
   gap: 10px;
+  justify-content: flex-end;
+  padding-right: 30px;
 }
 
 .centered {
@@ -150,7 +172,7 @@ export default {
   }
 
   .modal-wrap {
-    padding: 35px 15px 0 15px;
+    padding: 35px 15px 0;
   }
 
   .modal .ant-modal-body h2 {
