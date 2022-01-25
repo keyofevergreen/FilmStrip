@@ -5,12 +5,13 @@
 Hello! This is my first pet project on Vue3.\
 Features:
 - Movie lists with the ability to filter by genre.
-- Page with a description of the selected movie and a schedule of screenings.
+- Page with a description of the selected movie and a schedule of screenings(Available date selection window is one week).
 - Modal window with a choice of seats and payment.
 - Authorization (account data is stored in LocalStorage).
 - Personal account with ticket history. 
+- In the history of tickets, by pressing a button in tickets, you can switch to modal windows with QR codes and information about places
 
-In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://momentjs.com/), [ant-design-vue](https://www.antdv.com/docs/vue/introduce/) and [vuelidate](https://vuelidate-next.netlify.app/).
+In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://momentjs.com/), [ant-design-vue](https://www.antdv.com/docs/vue/introduce/), [vuelidate](https://vuelidate-next.netlify.app/) and [qrcode.vue](https://github.com/scopewu/qrcode.vue).
 
 
 ### 🐱‍🏍If you want to see a demo go [here](https://keyofevergreen.github.io/FilmStrip/)!
