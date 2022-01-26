@@ -25,7 +25,10 @@ In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://moment
 git clone https://github.com/keyofevergreen/FilmStrip.git
 ```
 3. Go to the cloned directory (e.g. `cd FilmStrip`).
-4. Add the API key to the ".env.example" file
+4. Create an .env file and add the following line to it:
+```
+VUE_APP_API_KEY = write your API key here
+```
 5. Run `npm install`.
 6. Run `npm run serve`. The command will start a local live server. Open (http://localhost:8080/) in your browser.
 
