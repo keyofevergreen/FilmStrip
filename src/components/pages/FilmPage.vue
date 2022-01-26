@@ -80,7 +80,7 @@ export default {
         return fetch(url, {
           method: 'GET',
           headers: {
-            'X-API-KEY': 'bbd5c8d2-662f-428b-9b73-5fb961a663ad',
+            'X-API-KEY': process.env['VUE_APP_API_KEY'],
             'Content-Type': 'application/json',
           },
         });

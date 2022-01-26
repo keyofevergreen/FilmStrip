@@ -59,13 +59,14 @@ export const filmsModule = {
   actions: {
     async fetchFilms({ commit }) {
       commit('setFetchingFilms', true);
+      console.log(process.env['VUE_APP_API_KEY '])
 
       for (const month of MONTHS) {
         try {
           const response = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres?year=${month.format('YYYY')}&month=${month.format('MMMM').toUpperCase()}`, {
             method: 'GET',
             headers: {
-              'X-API-KEY': 'bbd5c8d2-662f-428b-9b73-5fb961a663ad',
+              'X-API-KEY': process.env['VUE_APP_API_KEY'],
               'Content-Type': 'application/json',
             },
           });
