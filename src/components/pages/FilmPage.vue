@@ -2,47 +2,78 @@
   <div v-if="selectedFilm && !isFetching">
     <film-item :film="selectedFilm" :trailerURL="trailerURL"></film-item>
     <div class="data-line">
-      <span>Расписание на сегодня</span>
+      <date-picker/>
     </div>
     <session-schedule></session-schedule>
   </div>
 </template>
 
 <script>
-import FilmItem from '../components/FilmItem';
-import SessionSchedule from '../components/SessionSchedule';
+import FilmItem from '../FilmItem';
+import SessionSchedule from '../SessionSchedule';
 import { mapMutations, mapState } from 'vuex';
+import DatePicker from '../DatePicker';
+import moment from 'moment';
 
 export default {
   name: 'FilmPage',
   components: {
     FilmItem,
-    SessionSchedule
+    SessionSchedule,
+    DatePicker
   },
   props: {
     id: String
   },
   computed: {
     ...mapState({
-      selectedFilm: state => state.selectedFilm,
-      trailerURL: state => state.trailersUrlOfSelectedFilm,
-      ratingAgeLimits: state => state.ageLimitsOfSelectedFilm,
-      cinemas: state => state.cinemas
+      selectedFilm: state => state.selectedFilm.film,
+      trailerURL: state => state.selectedFilm.trailerUrl,
+      ratingAgeLimits: state => state.selectedFilm.ageLimits,
     })
   },
   data() {
     return {
       isFetching: false,
-    }
+    };
   },
   methods: {
     ...mapMutations({
-      setFilmData: 'setSelectedFilm',
-      setTrailersUrl: 'setTrailerUrlOfSelectedFilm',
-      setAgeLimits: 'setAgeLimitsOfSelectedFilm'
+      setFilmData: 'selectedFilm/setSelectedFilm',
+      setTrailersUrl: 'selectedFilm/setTrailerUrlOfSelectedFilm',
+      setAgeLimits: 'selectedFilm/setAgeLimitsOfSelectedFilm',
+      setDate: 'selectedFilm/setSelectedDate',
+      setPremiereDate: 'selectedFilm/setPremiereDate'
     }),
     setFetching(bool) {
       this.isFetching = bool;
+    },
+
+    getCorrectYoutubeTrailerUrl(trailers) {
+      const requiredString = /(Трейлер)/i;
+      const trailer = trailers?.items.filter(trailer => trailer.site === 'YOUTUBE' && requiredString.test(trailer.name));
+      if (trailer.length) {
+        const regex = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)?/;
+        const url = trailer[0]?.url;
+        return `https://www.youtube.com/embed/${url.match(regex)[1]}`;
+      }
+    },
+    getAgeRatingLimits(film) {
+      if (film.ratingAgeLimits === null) {
+        return '0+';
+      } else {
+        return `${film.ratingAgeLimits.match(/\d{1,2}/g)}+`;
+      }
+    },
+    getPremiereDate(premieres) {
+      const rusPremieres = premieres.items.filter(premiere => premiere.country?.country === 'Россия');
+      const rusPremiereReRelease = rusPremieres.find(premiere => premiere.reRelease === true);
+
+      if(rusPremiereReRelease) {
+        return moment(rusPremiereReRelease.date, 'YYYY-MM-DD').format('DD.MM.YYYY');
+      } else {
+        return moment(rusPremieres[0].date, 'YYYY-MM-DD').format('DD.MM.YYYY');
+      }
     },
     async fetchFilmsData(id) {
       const fetchData = (url) => {
@@ -52,24 +83,8 @@ export default {
             'X-API-KEY': 'bbd5c8d2-662f-428b-9b73-5fb961a663ad',
             'Content-Type': 'application/json',
           },
-        })
-      }
-      const getCorrectYoutubeTrailerUrl = (trailers) => {
-        const requiredString = /(Трейлер)/i;
-        const trailer = trailers?.items.filter(trailer => trailer.site === 'YOUTUBE' && requiredString.test(trailer.name));
-        if (trailer.length) {
-          const regex = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)?/;
-          const url = trailer[0]?.url;
-          return `https://www.youtube.com/embed/${url.match(regex)[1]}`;
-        }
-      }
-      const getAgeRatingLimits = (film) => {
-        if (film.ratingAgeLimits === null) {
-          return '0+'
-        } else {
-          return `${film.ratingAgeLimits.match(/\d{1,2}/g)}+`
-        }
-      }
+        });
+      };
 
       try {
         this.setFetching(true);
@@ -78,12 +93,17 @@ export default {
 
         const trailerData = await fetchData(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`);
         const trailers = await trailerData.json();
-        await this.setFilmData(film);
-        await this.setAgeLimits(getAgeRatingLimits(film));
-        await this.setTrailersUrl(getCorrectYoutubeTrailerUrl(trailers));
+
+        const premiereData = await fetchData(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/distributions`);
+        const worldPremieres = await premiereData.json();
+
+        this.setFilmData(film);
+        this.setAgeLimits(this.getAgeRatingLimits(film));
+        this.setTrailersUrl(this.getCorrectYoutubeTrailerUrl(trailers));
+        this.setPremiereDate(this.getPremiereDate(worldPremieres));
 
       } catch (e) {
-        console.error(e)
+        console.error(e);
       } finally {
         this.setFetching(false);
       }
@@ -91,21 +111,22 @@ export default {
   },
   mounted() {
     this.fetchFilmsData(this.id);
+  },
+  unmounted() {
+    this.setDate(moment().format('DD.MM.YYYY'));
   }
-}
+};
 </script>
 
 <style scoped>
 .data-line {
-  height: 46px;
-  margin-top: 20px;
-  padding-left: 20px;
-  font-size: 20px;
-  color: #fff;
-  background-color: var(--green);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-
   display: flex;
   align-items: center;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 20px;
+  background-color: var(--green);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 </style>
