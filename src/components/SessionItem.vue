@@ -1,18 +1,18 @@
 <template>
-  <div class="session-item">
+  <div class="session">
     <a-button
-        class="btn session-item__btn"
+        class="btn session__btn"
         :disabled="isDisabled"
-        :class='isDisabled ? "disabled" : "available"'
+        :class='isDisabled ? "session__btn-disabled" : "session__btn-available"'
         @click="setSession(session)">
       {{ session.time }}
     </a-button>
-    <span class="session-item__price">{{ session.price }} ₽</span>
+    <span class="session__price">{{ session.price }} ₽</span>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
@@ -25,8 +25,24 @@ export default {
   data() {
     return {
       interval: null,
-      isDisabled: moment(this.session.time, 'hh:mm') < moment(),
+      isDisabled: null,
     };
+  },
+  computed: {
+    ...mapState({
+      selectedDate: state => state.selectedFilm.selectedDate
+    })
+  },
+  watch: {
+    selectedDate(newValue) {
+      console.log(newValue !== moment().format('DD.MM.YYYY'))
+      if(newValue !== moment().format('DD.MM.YYYY')) {
+        this.stopTimer();
+        this.isDisabled = false;
+      } else {
+        this.startTimer();
+      }
+    }
   },
   methods: {
     ...mapMutations({
@@ -49,11 +65,15 @@ export default {
       }
     },
     stopTimer() {
-      clearInterval(this.interval);
+      if(this.interval) {
+        clearInterval(this.interval)
+      }
     },
   },
   beforeMount() {
-    this.startTimer();
+    if(this.selectedDate === moment().format('DD.MM.YYYY')) {
+      this.startTimer();
+    }
   },
   unmounted() {
     this.stopTimer();
@@ -62,30 +82,30 @@ export default {
 </script>
 
 <style scoped>
-.session-item {
+.session {
   position: relative;
   height: 50px;
 }
 
-.session-item__btn {
+.session__btn {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 80px;
   height: 30px;
   font-size: 14px;
-  border: 1px solid var(--green);
   border-radius: 5px;
   cursor: pointer;
   transition: transform .5s, background-color .5s;
 }
 
-.available {
+.session__btn-available {
   color: var(--pretty-black);
   background-color: #fff;
+  border: 1px solid var(--green);
 }
 
-.session-item__price {
+.session__price {
   position: absolute;
   top: 31px;
   left: 5px;
@@ -93,7 +113,7 @@ export default {
   font-size: 11px;
 }
 
-.session-item__btn:not(.disabled):hover {
+.session__btn:not(.session__btn-disabled):hover {
   color: #fff;
   background-color: var(--green);
   transform: scale(1.1);
@@ -101,5 +121,9 @@ export default {
 
 .ant-btn:focus {
   color: var(--pretty-black);
+}
+
+.ant-btn[disabled] {
+  cursor: default;
 }
 </style>
