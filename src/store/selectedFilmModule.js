@@ -1,5 +1,9 @@
+import moment from 'moment';
+
 export const selectedFilmModule = {
   state: () => ({
+    premiereDate: null,
+    selectedDate: moment().format('DD.MM.YYYY'),
     film: null,
     selectedSession: null,
     selectedTickets: [],
@@ -22,6 +26,9 @@ export const selectedFilmModule = {
     }
   },
   mutations: {
+    setPremiereDate(state, date) {
+      state.premiereDate = date;
+    },
     setSelectedFilm(state, film) {
       state.film = film;
     },
@@ -38,7 +45,7 @@ export const selectedFilmModule = {
       state.selectedSession = session;
     },
     setTicket(state, ticket) {
-      state.selectedTickets = [...state.selectedTickets, ticket].sort((prev, next) => prev.seat - next.seat);
+      state.selectedTickets = [...state.selectedTickets, ticket];
     },
     removeTicket(state, id) {
       state.selectedTickets = state.selectedTickets.filter(selectedTicket => selectedTicket.id !== id);
@@ -46,6 +53,9 @@ export const selectedFilmModule = {
     clearTickets(state) {
       state.selectedTickets = [];
     },
+    setSelectedDate(state, newDate) {
+      state.selectedDate = newDate;
+    }
   },
   namespaced: true
 }
