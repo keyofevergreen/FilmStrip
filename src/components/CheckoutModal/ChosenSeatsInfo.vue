@@ -41,7 +41,7 @@
     <div class="order-info">
       <h3>{{getCountInfoAboutTickets}}</h3>
       <div class="order-info__ticket-item-wrap">
-        <div class="order-info__ticket-item" v-for="ticket in tickets" :key="ticket.id">
+        <div class="order-info__ticket-item" v-for="ticket in sortedTickets" :key="ticket.id">
           <div class="ticket-item__seat-info">Ряд {{ticket.row}}, Место {{ticket.seat}}</div>
           <div class="ticket-item__dotted-line"></div>
           <div class="ticket-item__seat-price">{{session.price}}₽</div>
@@ -79,7 +79,10 @@ export default {
     }),
     ...mapGetters({
       getCountInfoAboutTickets: 'selectedFilm/getCountInfoAboutTickets'
-    })
+    }),
+    sortedTickets() {
+      return this.tickets.map(el => el).sort((a, b) => a.row - b.row || a.seat - b.seat);
+    }
   },
   methods: {
     ...mapMutations({
