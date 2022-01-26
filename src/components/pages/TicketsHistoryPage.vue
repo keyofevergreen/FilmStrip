@@ -1,22 +1,25 @@
 <template>
 <div>
-
+  <h2 class="page-header">История билетов</h2>
+  <tickets-list></tickets-list>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import TicketsList from '../TicketsList';
 
 export default {
   name: 'TicketsHistoryPage',
+  components: { TicketsList },
   computed: {
     ...mapState({
-      isAuth: state => state.isAuth
+      authAccount: state => state.auth.authAccount
     })
   },
   watch: {
-    isAuth(newValue) {
-      if (newValue === false) {
+    authAccount(newValue) {
+      if(newValue === null) {
         this.$router.push('/')
       }
     }

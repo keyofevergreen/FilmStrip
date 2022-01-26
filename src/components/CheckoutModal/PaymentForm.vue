@@ -102,11 +102,12 @@ export default {
   },
   computed: {
     ...mapState({
-      tickets: (state) => state.selectedFilm.selectedTickets,
-      session: (state) => state.selectedFilm.selectedSession,
-      film: (state) => state.selectedFilm.film,
-      ageLimits: (state) => state.selectedFilm.ageLimits,
-      authAccount: (state) => state.auth.authAccount,
+      tickets: state => state.selectedFilm.selectedTickets,
+      session: state => state.selectedFilm.selectedSession,
+      film: state => state.selectedFilm.film,
+      ageLimits: state => state.selectedFilm.ageLimits,
+      date: state => state.selectedFilm.selectedDate,
+      authAccount: state => state.auth.authAccount,
     }),
     userMailErrors() {
       if (this.v$.form.userMail.required.$invalid)
@@ -170,6 +171,7 @@ export default {
             filmName: this.film.nameRu,
             filmLength: this.film.filmLength,
             session: this.session,
+            date: this.date,
             ageLimits: this.ageLimits,
             ticketsInfo: this.tickets,
             userMail: this.form.userMail,

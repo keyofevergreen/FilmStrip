@@ -3,7 +3,7 @@
     <div class="ticket-item">
       <div class="ticket-item__info">
         <h1 class="info-film-name">{{ ticket.filmName }} {{ ticket.session.format === '3D' ? '3D' : null }}</h1>
-        <h2 class="info-film-time">{{ ticket.session.time }}</h2>
+        <h2 class="info-film-date">{{ticket.date}} {{ ticket.session.time }}</h2>
       </div>
       <div class="ticket-item__qr-code-wrap">
         <svg xmlns="http://www.w3.org/2000/svg" class="ticket-item__qr-code-btn" @click="showQrCodeModal">
@@ -38,6 +38,7 @@
 <script>
 import QrcodeVue from 'qrcode.vue';
 import qrcode from '../assets/qr-code-icon.svg';
+import moment from 'moment';
 
 export default {
   name: 'TicketsItem',
@@ -49,6 +50,7 @@ export default {
   },
   data() {
     return {
+      moment,
       qrcode,
       isVisible: false,
     };
@@ -100,6 +102,10 @@ export default {
 
 .info-film-name {
   font-weight: 400;
+  font-size: 20px;
+}
+
+.info-film-date {
   font-size: 20px;
 }
 

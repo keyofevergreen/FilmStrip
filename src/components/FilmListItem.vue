@@ -50,7 +50,6 @@ export default {
     },
     linkToFilmPage() {
       this.$router.push(`/films/${this.film.kinopoiskId}`)
-      moment(this.film.premiereRu, 'YYYY-MM-DD')
     }
   },
   computed: {
