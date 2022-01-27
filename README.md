@@ -19,7 +19,7 @@ In my work I used [Swiper.js](https://swiperjs.com/), [moment.js](https://moment
 
 ## How to use
 
-1. You need to register at [kinopoiskapiunofficial](https://kinopoiskapiunofficial.tech/) and get an API key.
+1. You need to register at [kinopoiskapiunofficial](https://kinopoiskapiunofficial.tech/signup) and get an API key.
 2. Clone this repository.
 ```
 git clone https://github.com/keyofevergreen/FilmStrip.git
